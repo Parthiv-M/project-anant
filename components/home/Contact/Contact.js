@@ -12,6 +12,8 @@ const Contact = (props) => {
         formData.append('service_id', process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID);
         formData.append('template_id', process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID);
         formData.append('user_id', process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
+        formData.append('from_name', document.getElementById("contact-form").elements["first_name"].value + " " + document.getElementById("contact-form").elements["last_name"].value);
+        formData.append('reply_to', document.getElementById("contact-form").elements["from_email"]);
 
         let res = await axios.post("https://api.emailjs.com/api/v1.0/email/send-form", formData)
         if (res.status === 200) {
@@ -29,7 +31,7 @@ const Contact = (props) => {
                 <h2 className="md:text-4xl text-xl text-white text-center">Contact Us</h2>
                 <div className="w-56 mx-auto my-2 h-1 bg-gray-100"></div>
             </div>
-            <form onSubmit={(e) => handleSubmit(e)} className="container md:w-2/3 py-4 md:px-0 px-6 flex flex-col items-center justify-center rounded-lg" style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}>
+            <form id="contact-form" onSubmit={(e) => handleSubmit(e)} className="container md:w-2/3 py-4 md:px-0 px-6 flex flex-col items-center justify-center rounded-lg" style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}>
                 <div className="flex flex-col md:flex-row justify-between md:w-3/4 w-full m-1">
                     <div className="flex flex-col md:w-1/2 md:mr-1">
                         <p className="text-white text-sm md:text-md">First Name</p>
