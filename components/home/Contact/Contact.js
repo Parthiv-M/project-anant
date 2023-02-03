@@ -11,7 +11,7 @@ const Contact = (props) => {
         let formData = new FormData(e.target);
         formData.append('service_id', process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID);
         formData.append('template_id', process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID);
-        formData.append('user_id', process.env.NEXT_PUBLIC_EMAILJS_USER_ID);
+        formData.append('user_id', process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
 
         let res = await axios.post("https://api.emailjs.com/api/v1.0/email/send-form", formData)
         if (res.status === 200) {
