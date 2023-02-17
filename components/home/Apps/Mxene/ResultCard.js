@@ -22,11 +22,11 @@ export default function ResultCard({ mxene, latticeConstant, bandGap, id, idList
             <div className="flex md:justify-between justify-center md:gap-2 gap-4 md:mx-2 my-2">
                 <div className="text-center mx-2">
                     <p className="md:text-xl text-lg text-gray-300">Lattice Constant</p>
-                    <p className="text-2xl font-medium text-white">{latticeConstant}</p>
+                    <p className="text-2xl font-medium text-white">{parseFloat(latticeConstant).toFixed(2)}</p>
                 </div>
                 <div className="text-center mx-2">
                     <p className="md:text-xl text-lg text-gray-300">Band Gap</p>
-                    <p className="text-2xl font-medium text-white">{bandGap}</p>
+                    <p className="text-2xl font-medium text-white">{parseFloat(bandGap).toFixed(2)}</p>
                 </div>
             </div>
             <Link href={`/apps/mxene/${id}`}>
