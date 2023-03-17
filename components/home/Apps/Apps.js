@@ -10,6 +10,12 @@ const AppData = [
     link: "/apps/mxene"
   },
   {
+    name: "Topology Database",
+    description: "Contains details of topological phases present in MXenes' monolayers",
+    image: "/images/TopologyDatabaseCard.png",
+    link: "/apps/topology"
+  },
+  {
     name: "Thermoelectric Material Database",
     description: "Upcoming...",
     image: "https://ik.imagekit.io/iiscvsmanipal/thermoelectric_dUZbOhz9u?updatedAt=1639042149795",

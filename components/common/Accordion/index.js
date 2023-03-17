@@ -11,7 +11,7 @@ export default function Accordion(props) {
     const fa_item = isShowing ? "fa-caret-down" : "fa-caret-up";
 
     return (
-        <div className="w-full rounded mb-4 cursor-pointer bg-[#ffffff39]">
+        <div className="w-full rounded mb-2 cursor-pointer bg-[#ffffff39]">
             <div className="bg-transparent w-full py-2 px-4 flex justify-between text-white select-none" onClick={toggle}>
                 <p className="text-lg font-normal">
                     {props.title}

@@ -12,8 +12,9 @@ import b64ToBlob from "b64-to-blob";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Meta from '../../../components/common/Meta/Meta';
+import CheckInOtherApps from '../../../components/common/CheckInOtherApps';
 
-export default function MxeneResult({ mxene, slug }) {
+export default function MxeneResult({ mxene, topologyId, slug }) {
   const router = useRouter();
   const [Model3D, setModel3D] = useState(<p>Model is loading...</p>);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -34,7 +35,7 @@ export default function MxeneResult({ mxene, slug }) {
     setModel3D(
       <DynamicComponent
         fileContents={mxene.pdb_file_content}
-        // fileLink={process.env.NEXT_PUBLIC_SERVER_URL + mxene.pdb_file}
+      // fileLink={process.env.NEXT_PUBLIC_SERVER_URL + mxene.pdb_file}
       />);
   }, [])
 
@@ -104,7 +105,7 @@ export default function MxeneResult({ mxene, slug }) {
         <h2 className="md:text-4xl text-3xl font-bold text-white">{mxene.mxene}</h2>
         <div className="w-56 mx-auto my-2 h-1 bg-gray-100"></div>
       </div>
-      <div className="container md:mb-12 lg:p-8 p-4 grid lg:grid-cols-2 grid-cols-1 gap-2">
+      <div className="container lg:p-8 p-4 grid lg:grid-cols-2 grid-cols-1 gap-2">
         <div className="min-h-[45vh] h-full w-full flex justify-center items-center result-card rounded-lg" id="apphere">
           {Model3D}
         </div>
@@ -153,6 +154,7 @@ export default function MxeneResult({ mxene, slug }) {
           </div>
         </div>
       </div>
+      <CheckInOtherApps topologyId={topologyId}/>
       <div className='flex flex-row justify-between container md:mb-12 lg:px-8 p-4 text-white'>
         <p onClick={() => router.back()} className="cursor-pointer hover:underline"><i className='fa fa-arrow-left pr-2'></i>Go back</p>
         <Link href="/apps/mxene/search"><p className="cursor-pointer hover:underline"><i className='fa fa-search pr-2'></i>Search Page</p></Link>
@@ -174,10 +176,19 @@ export const getServerSideProps = async (context) => {
     context.res.writeHead(302, { Location: "/500" });
     context.res.end();
   });
+  const resTopology = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/searchtopology/searchbymxeneid/${context.params.slug}`
+  ).catch(err => {
+    console.log(err)
+    context.res.writeHead(302, { Location: "/500" });
+    context.res.end();
+  });
+  const topologyId = resTopology ? await resTopology.json() : {};
   const mxenes = resMxenes ? await resMxenes.json() : {};
   return {
     props: {
       mxene: mxenes,
+      topologyId: topologyId.id,
       slug: context.params.slug,
     }
   };

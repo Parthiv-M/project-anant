@@ -149,6 +149,7 @@ export default function MxeneFilter({ query, res }) {
                       key={mxene.id}
                       id={mxene.id}
                       mxene={mxene.mxene}
+                      cardType={"mxene"}
                       latticeConstant={mxene.latticeConstant}
                       bandGap={mxene.bandGap}
                       idList={idList}
