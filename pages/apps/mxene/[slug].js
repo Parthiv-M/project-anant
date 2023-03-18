@@ -183,12 +183,14 @@ export const getServerSideProps = async (context) => {
     context.res.writeHead(302, { Location: "/500" });
     context.res.end();
   });
-  const topologyId = resTopology ? await resTopology.json() : {};
+  let topologyId;
+  if (resTopology.status === 200)
+    topologyId = resTopology ? await resTopology.json() : {};
   const mxenes = resMxenes ? await resMxenes.json() : {};
   return {
     props: {
       mxene: mxenes,
-      topologyId: topologyId.id,
+      topologyId: topologyId ? topologyId.id : null,
       slug: context.params.slug,
     }
   };

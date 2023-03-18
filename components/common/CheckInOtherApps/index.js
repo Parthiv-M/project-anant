@@ -1,5 +1,6 @@
 const CheckInOtherApps = ({ topologyId, mxeneId }) => {
     return (
+        (topologyId || mxeneId) ? 
         <div className="w-full p-8">
             <h6 className="text-white my-6 font-bold">
                 <i className="fa fa-solid fa-database mr-2"></i>
@@ -31,7 +32,7 @@ const CheckInOtherApps = ({ topologyId, mxeneId }) => {
                     <i className="fa fa-solid fa-arrow-right ml-1"></i>
                 </a>
             }
-        </div>
+        </div> : <></>
     )
 }
 
