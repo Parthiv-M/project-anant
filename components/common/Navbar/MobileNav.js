@@ -11,16 +11,22 @@ const genMenuOptions = [
     { name: "Contact", href: "/contact" }
 ]
 
-const appMenuOptions = [
+const mxeneOptions = [
     { name: "Home", href: "/" },
     { name: "About", href: "/apps/mxene" },
-    { name: "Upload", href: "/apps/mxene/upload" },
-    { name: "Mxene Search", href: "/apps/mxene/search" }
+    { name: "MXene Search", href: "/apps/mxene/search" }
 ]
 
+const topologyOptions = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/apps/topology" },
+    { name: "Topology Search", href: "/apps/topology/search" }
+]
 const MobileNav = () => {
     const [navBarOpen, setNavbarOpen] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
+    const [index, setIndex] = useState(0);
+    const [menuOptions, setMenuOptions] = useState(null);
 
     const router = useRouter();
 
@@ -39,11 +45,20 @@ const MobileNav = () => {
         getUserInfo()
     }, [])
 
-    // assign the menu options for navbar
-    let regex = /\/[a-zA-Z]+\//;
-    const menuOptions
-        = regex.test(router.pathname)
-            ? appMenuOptions : genMenuOptions;
+    useEffect(() => {
+        const cleanPath = router.pathname.split("/").filter((el) => el !== '')[1];
+        switch (cleanPath) {
+            case "mxene":
+                setMenuOptions(mxeneOptions);
+                break;
+            case "topology":
+                setMenuOptions(topologyOptions);
+                break;
+            default:
+                setMenuOptions(genMenuOptions);
+                break;
+        }
+    }, [router.pathname.split("/").filter((el) => el !== '')[1]])
 
     const currentURL = router.asPath;
     const queries = router.query;
