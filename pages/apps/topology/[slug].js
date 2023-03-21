@@ -103,97 +103,101 @@ export default function MxeneResult({ topologyData, slug }) {
         <h2 className="md:text-4xl text-3xl font-bold text-white">{topologyData.mxene}</h2>
         <div className="w-56 mx-auto my-2 h-1 bg-gray-100"></div>
       </div>
-      <div className="container md:mb-12 lg:p-8 p-4 grid lg:grid-cols-2 grid-cols-1 gap-2">
-        <div className="min-h-[45vh] h-full w-full flex justify-center items-center result-card rounded-lg" id="apphere">
-          {Model3D}
-        </div>
-        <div className="result-card h-full w-full justify-start items-start p-4 rounded-lg">
-          <textarea
-            disabled={true}
-            value={topologyData.poscar_data}
-            className="w-full focus:outline-none border-2 border-gray-300 my-2 p-2 h-full"
-            rows={5}
-          ></textarea>
-        </div>
-        <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
-          <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.bandImage} alt="Band image for the mxene" layout='fill' loading='lazy' objectFit='contain' />
-        </div>
-        <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
-          <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.socBandImage} alt="SOC Band image" layout='fill' loading='lazy' objectFit='contain' />
-        </div>
-        {
-          topologyData.isSoc &&
-          <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
-            <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.berryStateImage} alt="Berry state image" layout='fill' loading='lazy' objectFit='contain' />
+      <div className="w-full grid lg:grid-cols-12 grid-cols-1 gap-2 lg:p-8 p-4">
+        <div className="lg:col-span-10 grid lg:grid-cols-2 grid-cols-1 gap-2">
+          <div className="min-h-[40vh] h-full w-full flex justify-center items-center result-card rounded-lg" id="apphere">
+            {Model3D}
           </div>
-        }
-        {
-          topologyData.isSoc &&
-          <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
-            <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.surfStateImage} alt="Surface state image" layout='fill' loading='lazy' objectFit='contain' />
+          <div className="result-card h-full w-full justify-start items-start p-4 rounded-lg">
+            <textarea
+              disabled={true}
+              value={topologyData.poscar_data}
+              className="w-full focus:outline-none border-2 border-gray-300 my-2 p-2 h-full"
+              rows={5}
+            ></textarea>
           </div>
-        }
-        <div className="">
-
-        </div>
-        <div className="flex flex-col items-center justify-between">
+          <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
+            <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.bandImage} alt="Band image for the mxene" layout='fill' loading='lazy' objectFit='contain' />
+          </div>
+          <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
+            <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.socBandImage} alt="SOC Band image" layout='fill' loading='lazy' objectFit='contain' />
+          </div>
           {
-            topologyData.isSoc && 
-            <Accordion title="Why is this MXene different?" content={
-              "The existence of non-zero Berry curvature and Chern number has been found in this MXene due to the combined effects of time \
-            reversal (T) and inversion symmetry (P). This indicates the existence of the valley-polarized quantum anomalous Hall (VP-QAH) \
-            effect in this material. The non-zero value of the Chern number is verified by the presence of a single chiral edge state \
-            appearing in the band gap of the material."
-            } />
+            topologyData.isSoc &&
+            <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
+              <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.berryStateImage} alt="Berry state image" layout='fill' loading='lazy' objectFit='contain' />
+            </div>
           }
           {
             topologyData.isSoc &&
-            <Accordion title="Topological properties calculated" content={topologyData.topologicalProperties.join(", ")} />
+            <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
+              <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.surfStateImage} alt="Surface state image" layout='fill' loading='lazy' objectFit='contain' />
+            </div>
           }
-          <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-2">
-            <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
-              <h4 className="md:text-3xl text-2xl theme-text font-bold">{topologyData.isSoc ? topologyData.socBandGap : topologyData.bandGap}</h4>
-              <h5 className="text-lg">Band Gap (eV)</h5>
-            </div>
-            {
-              topologyData.isSoc &&
-              <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
-                <h4 className="md:text-2xl text-xl theme-text font-bold">{topologyData.magneticState}</h4>
-                <h5 className="text-lg">Magnetic Ground State</h5>
-              </div>
-            }
-            {
-              topologyData.isSoc &&
-              <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
-                <h4 className="md:text-3xl text-2xl theme-text font-bold">{topologyData.socMagneticMoment}</h4>
-                <h5 className="text-lg">Magnetic Moment (μ<sub>B</sub>)</h5>
-              </div>
-            }
-            <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
-              <h4 className="md:text-3xl text-2xl theme-text font-bold">{topologyData.latticeConstant}</h4>
-              <h5 className="text-lg">Lattice Constant</h5>
-            </div>
+          <div className="">
+
           </div>
-          <div className="hover:theme border border-white w-full bg-white hover:text-white text-black mt-2">
-            {!loading ? <button
-              onClick={() => {
-                setLoading(true);
-                handleDownload()
-              }}
-              className="w-full my-2 uppercase text-lg outline-none"
-            >
-              <span><i className="fa fa-download mx-1"></i></span> Download
-            </button>
-              :
-              <button
+          <div className="flex flex-col items-center justify-between">
+            {
+              topologyData.isSoc &&
+              <Accordion title="Why is this MXene different?" content={
+                "The existence of non-zero Berry curvature and Chern number has been found in this MXene due to the combined effects of time \
+            reversal (T) and inversion symmetry (P). This indicates the existence of the valley-polarized quantum anomalous Hall (VP-QAH) \
+            effect in this material. The non-zero value of the Chern number is verified by the presence of a single chiral edge state \
+            appearing in the band gap of the material."
+              } />
+            }
+            {
+              topologyData.isSoc &&
+              <Accordion title="Topological properties calculated" content={topologyData.topologicalProperties.join(", ")} />
+            }
+            <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-2">
+              <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
+                <h4 className="md:text-3xl text-2xl theme-text font-bold">{topologyData.isSoc ? topologyData.socBandGap : topologyData.bandGap}</h4>
+                <h5 className="text-lg">Band Gap (eV)</h5>
+              </div>
+              {
+                topologyData.isSoc &&
+                <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
+                  <h4 className="md:text-2xl text-xl theme-text font-bold">{topologyData.magneticState}</h4>
+                  <h5 className="text-lg">Magnetic Ground State</h5>
+                </div>
+              }
+              {
+                topologyData.isSoc &&
+                <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
+                  <h4 className="md:text-3xl text-2xl theme-text font-bold">{topologyData.socMagneticMoment}</h4>
+                  <h5 className="text-lg">Magnetic Moment (μ<sub>B</sub>)</h5>
+                </div>
+              }
+              <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
+                <h4 className="md:text-3xl text-2xl theme-text font-bold">{topologyData.latticeConstant}</h4>
+                <h5 className="text-lg">Lattice Constant</h5>
+              </div>
+            </div>
+            <div className="hover:theme border border-white w-full bg-white hover:text-white text-black mt-2">
+              {!loading ? <button
+                onClick={() => {
+                  setLoading(true);
+                  handleDownload()
+                }}
                 className="w-full my-2 uppercase text-lg outline-none"
               >
-                <span><i className="fa fa-circle-o-notch mr-2 animate-spin"></i></span> Please wait
-              </button>}
+                <span><i className="fa fa-download mx-1"></i></span> Download
+              </button>
+                :
+                <button
+                  className="w-full my-2 uppercase text-lg outline-none"
+                >
+                  <span><i className="fa fa-circle-o-notch mr-2 animate-spin"></i></span> Please wait
+                </button>}
+            </div>
           </div>
         </div>
+        <div className="lg:col-span-2">
+          <CheckInOtherApps mxeneId={topologyData.mxeneId} />
+        </div>
       </div>
-      <CheckInOtherApps mxeneId={topologyData.mxeneId}/>
       <div className='flex flex-row justify-between container md:mb-12 lg:px-8 p-4 text-white'>
         <p onClick={() => router.back()} className="cursor-pointer hover:underline"><i className='fa fa-arrow-left pr-2'></i>Go back</p>
         <Link href="/apps/topology/search"><p className="cursor-pointer hover:underline"><i className='fa fa-search pr-2'></i>Search Page</p></Link>

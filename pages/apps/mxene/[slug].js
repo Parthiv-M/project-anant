@@ -105,56 +105,60 @@ export default function MxeneResult({ mxene, topologyId, slug }) {
         <h2 className="md:text-4xl text-3xl font-bold text-white">{mxene.mxene}</h2>
         <div className="w-56 mx-auto my-2 h-1 bg-gray-100"></div>
       </div>
-      <div className="container lg:p-8 p-4 grid lg:grid-cols-2 grid-cols-1 gap-2">
-        <div className="min-h-[45vh] h-full w-full flex justify-center items-center result-card rounded-lg" id="apphere">
-          {Model3D}
-        </div>
-        <div className="result-card h-full w-full justify-start items-start p-4 rounded-lg">
-          <textarea
-            disabled={true}
-            value={mxene.poscar_data}
-            className="w-full focus:outline-none border-2 border-gray-300 my-2 p-2 h-full"
-            rows={5}
-          ></textarea>
-        </div>
-        <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
-          <Image src={process.env.NEXT_PUBLIC_SERVER_URL + mxene.bandImage} alt="Band image for the mxene protein" layout='fill' loading='lazy' objectFit='contain' />
-        </div>
-        <div className="flex flex-col gap-2 justify-center items-center">
-          <div className="md:h-full w-full flex md:flex-row flex-col gap-2">
-            <div className="w-full md:w-1/3 h-full bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
-              <h4 className="md:text-3xl text-2xl theme-text font-bold">{parseFloat(mxene.latticeConstant).toFixed(2)}</h4>
-              <h5 className="text-lg">Lattice Constant (Å)</h5>
-            </div>
-            <div className="w-full md:w-1/3 h-full bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
-              <h4 className="md:text-3xl text-2xl theme-text font-bold">{parseFloat(mxene.bandGap).toFixed(2)}</h4>
-              <h5 className="text-lg">Band Gap (eV)</h5>
-            </div>
-            <div className="w-full md:w-1/3 h-full bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
-              <h4 className="md:text-3xl text-2xl theme-text font-bold">{parseFloat(mxene.magneticMoment).toFixed(2)}</h4>
-              <h5 className="text-lg">Magnetic Moment (μ<sub>B</sub>)</h5>
-            </div>
+      <div className="w-full grid lg:grid-cols-12 grid-cols-1 gap-2 lg:p-8 p-4">
+        <div className="lg:col-span-10 grid lg:grid-cols-2 grid-cols-1 gap-2">
+          <div className="min-h-[40vh] h-full w-full flex justify-center items-center result-card rounded-lg" id="apphere">
+            {Model3D}
           </div>
-          <div className="hover:theme border border-white w-full bg-white hover:text-white text-black">
-            {!loading ? <button
-              onClick={() => {
-                setLoading(true);
-                handleDownload()
-              }}
-              className="w-full my-2 uppercase text-lg outline-none"
-            >
-              <span><i className="fa fa-download mx-1"></i></span> Download
-            </button>
-              :
-              <button
+          <div className="result-card h-full w-full justify-start items-start p-4 rounded-lg">
+            <textarea
+              disabled={true}
+              value={mxene.poscar_data}
+              className="w-full focus:outline-none border-2 border-gray-300 my-2 p-2 h-full"
+              rows={5}
+            ></textarea>
+          </div>
+          <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[35vh]">
+            <Image src={process.env.NEXT_PUBLIC_SERVER_URL + mxene.bandImage} alt="Band image for the mxene protein" layout='fill' loading='lazy' objectFit='contain' />
+          </div>
+          <div className="flex flex-col gap-2 justify-center items-center">
+            <div className="md:h-full w-full flex md:flex-row flex-col gap-2">
+              <div className="w-full md:w-1/3 h-full bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
+                <h4 className="md:text-3xl text-2xl theme-text font-bold">{parseFloat(mxene.latticeConstant).toFixed(2)}</h4>
+                <h5 className="text-lg">Lattice Constant (Å)</h5>
+              </div>
+              <div className="w-full md:w-1/3 h-full bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
+                <h4 className="md:text-3xl text-2xl theme-text font-bold">{parseFloat(mxene.bandGap).toFixed(2)}</h4>
+                <h5 className="text-lg">Band Gap (eV)</h5>
+              </div>
+              <div className="w-full md:w-1/3 h-full bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
+                <h4 className="md:text-3xl text-2xl theme-text font-bold">{parseFloat(mxene.magneticMoment).toFixed(2)}</h4>
+                <h5 className="text-lg">Magnetic Moment (μ<sub>B</sub>)</h5>
+              </div>
+            </div>
+            <div className="hover:theme border border-white w-full bg-white hover:text-white text-black">
+              {!loading ? <button
+                onClick={() => {
+                  setLoading(true);
+                  handleDownload()
+                }}
                 className="w-full my-2 uppercase text-lg outline-none"
               >
-                <span><i className="fa fa-circle-o-notch mr-2 animate-spin"></i></span> Please wait
-              </button>}
+                <span><i className="fa fa-download mx-1"></i></span> Download
+              </button>
+                :
+                <button
+                  className="w-full my-2 uppercase text-lg outline-none"
+                >
+                  <span><i className="fa fa-circle-o-notch mr-2 animate-spin"></i></span> Please wait
+                </button>}
+            </div>
           </div>
         </div>
+        <div className="lg:col-span-2">
+          <CheckInOtherApps topologyId={topologyId} />
+        </div>
       </div>
-      <CheckInOtherApps topologyId={topologyId}/>
       <div className='flex flex-row justify-between container md:mb-12 lg:px-8 p-4 text-white'>
         <p onClick={() => router.back()} className="cursor-pointer hover:underline"><i className='fa fa-arrow-left pr-2'></i>Go back</p>
         <Link href="/apps/mxene/search"><p className="cursor-pointer hover:underline"><i className='fa fa-search pr-2'></i>Search Page</p></Link>
