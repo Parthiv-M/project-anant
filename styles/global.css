@@ -49,3 +49,13 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: black;
 }
+
+.react-tooltip {
+  max-width: 35vw;
+}
+
+@media only screen and (max-width: 800px) {
+  .react-tooltip {
+    max-width: 80vw;
+  }
+}

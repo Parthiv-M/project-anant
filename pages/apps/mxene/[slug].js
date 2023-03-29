@@ -13,6 +13,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Meta from '../../../components/common/Meta/Meta';
 import CheckInOtherApps from '../../../components/common/CheckInOtherApps';
+import { Tooltip } from "react-tooltip";
+import 'react-tooltip/dist/react-tooltip.css';
+import { SpinPolarisedBand } from '../../../data/ToolTipData';
 
 export default function MxeneResult({ mxene, topologyId, slug }) {
   const router = useRouter();
@@ -118,8 +121,26 @@ export default function MxeneResult({ mxene, topologyId, slug }) {
               rows={5}
             ></textarea>
           </div>
-          <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[35vh]">
-            <Image src={process.env.NEXT_PUBLIC_SERVER_URL + mxene.bandImage} alt="Band image for the mxene protein" layout='fill' loading='lazy' objectFit='contain' />
+          <div className="bg-white rounded-lg p-1">
+            <div className="px-2 py-1 rounded-md z-10 text-white text-center" style={{ backgroundColor: "rgb(22, 63, 101, 0.85)" }}>Spin polarised band structure</div>
+            <div className="card relative w-full lg:min-h-[40vh] h-[30vh] my-3">
+              <Image
+                src={process.env.NEXT_PUBLIC_SERVER_URL + mxene.bandImage}
+                alt="Band image for the mxene protein"
+                layout='fill'
+                loading='lazy'
+                objectFit='contain'
+              />
+              <Tooltip
+                id="tooltip"
+              />
+              <div
+                className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
+                data-tooltip-id="tooltip"
+                data-tooltip-content={SpinPolarisedBand}
+                data-tooltip-place="top"
+              >?</div>
+            </div>
           </div>
           <div className="flex flex-col gap-2 justify-center items-center">
             <div className="md:h-full w-full flex md:flex-row flex-col gap-2">
@@ -199,9 +220,3 @@ export const getServerSideProps = async (context) => {
     }
   };
 };
-
-
-
-
-
-

@@ -14,6 +14,9 @@ import { useRouter } from 'next/router';
 import Meta from '../../../components/common/Meta/Meta';
 import Accordion from '../../../components/common/Accordion';
 import CheckInOtherApps from '../../../components/common/CheckInOtherApps';
+import { Tooltip } from "react-tooltip";
+import 'react-tooltip/dist/react-tooltip.css';
+import { SOCBand, SurfaceState, SpinPolarisedBand, BerryCurvature } from '../../../data/ToolTipData';
 
 export default function MxeneResult({ topologyData, slug }) {
   const router = useRouter();
@@ -116,22 +119,94 @@ export default function MxeneResult({ topologyData, slug }) {
               rows={5}
             ></textarea>
           </div>
-          <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
-            <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.bandImage} alt="Band image for the mxene" layout='fill' loading='lazy' objectFit='contain' />
+          <div className="bg-white rounded-lg p-1">
+            <div className="px-2 py-1 rounded-md z-10 text-white text-center" style={{ backgroundColor: "rgb(22, 63, 101, 0.85)" }}>Spin polarised band structure</div>
+            <div className="card relative w-full lg:min-h-[40vh] h-[30vh] my-3">
+              <Image
+                src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.bandImage}
+                alt="Band image for the mxene"
+                layout='fill'
+                loading='lazy'
+                objectFit='contain'
+              />
+              <Tooltip
+                id="tooltip"
+              />
+              <div
+                  className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={SpinPolarisedBand}
+                  data-tooltip-place="top"
+                >?</div>
+            </div>
           </div>
-          <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
-            <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.socBandImage} alt="SOC Band image" layout='fill' loading='lazy' objectFit='contain' />
+          <div className="bg-white rounded-lg p-1">
+            <div className="px-2 py-1 rounded-md z-10 text-white text-center" style={{ backgroundColor: "rgb(22, 63, 101, 0.85)" }}>SOC band structure</div>
+            <div className="card relative w-full lg:min-h-[40vh] h-[30vh] my-3">
+              <Image
+                src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.socBandImage}
+                alt="SOC Band image"
+                layout='fill'
+                loading='lazy'
+                objectFit='contain'
+              />
+              <Tooltip
+                id="tooltip"
+              />
+              <div
+                  className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={SOCBand}
+                  data-tooltip-place="top"
+                >?</div>
+            </div>
           </div>
           {
             topologyData.isSoc &&
-            <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
-              <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.berryStateImage} alt="Berry state image" layout='fill' loading='lazy' objectFit='contain' />
+            <div className="bg-white rounded-lg p-1">
+              <div className="px-2 py-1 rounded-md z-10 text-white text-center" style={{ backgroundColor: "rgb(22, 63, 101, 0.85)" }}>Berry curvature</div>
+              <div className="card relative w-full lg:min-h-[40vh] h-[30vh] my-3">
+                <Image
+                  src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.berryStateImage}
+                  alt="Berry curvature image"
+                  layout='fill'
+                  loading='lazy'
+                  objectFit='contain'
+                />
+                <Tooltip
+                  id="tooltip"
+                />
+                <div
+                  className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={BerryCurvature}
+                  data-tooltip-place="top"
+                >?</div>
+              </div>
             </div>
           }
           {
             topologyData.isSoc &&
-            <div className="flex justify-center items-center bg-white relative h-[30vh] lg:h-full w-full rounded-lg min-h-[40vh]">
-              <Image src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.surfStateImage} alt="Surface state image" layout='fill' loading='lazy' objectFit='contain' />
+            <div className="bg-white rounded-lg p-1">
+              <div className="px-2 py-1 rounded-md z-10 text-white text-center" style={{ backgroundColor: "rgb(22, 63, 101, 0.85)" }}>Surface state</div>
+              <div className="card relative w-full lg:min-h-[40vh] h-[30vh] my-3">
+                <Image
+                  src={process.env.NEXT_PUBLIC_SERVER_URL + topologyData.surfStateImage}
+                  alt="Surface state image"
+                  layout='fill'
+                  loading='lazy'
+                  objectFit='contain'
+                />
+                <Tooltip
+                  id="tooltip"
+                />
+                <div
+                  className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
+                  data-tooltip-id="tooltip"
+                  data-tooltip-content={SurfaceState}
+                  data-tooltip-place="top"
+                >?</div>
+              </div>
             </div>
           }
           <div className="">
@@ -171,7 +246,7 @@ export default function MxeneResult({ topologyData, slug }) {
                 </div>
               }
               <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
-                <h4 className="md:text-3xl text-2xl theme-text font-bold">{topologyData.latticeConstant}</h4>
+                <h4 className="md:text-3xl text-2xl theme-text font-bold">{parseFloat(topologyData.latticeConstant).toFixed(2).toString()}</h4>
                 <h5 className="text-lg">Lattice Constant</h5>
               </div>
             </div>
@@ -205,6 +280,11 @@ export default function MxeneResult({ topologyData, slug }) {
       <style>{`
         .result-card {
           background-color: rgba(255,255,255,0.9)
+        }
+        .card:hover .float-heading {
+          transform: translateY(-10px);
+          opacity: 0;
+          transition: all 300ms ease-in-out;
         }
       `}</style>
     </div>
