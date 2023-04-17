@@ -16,6 +16,12 @@ const AppData = [
     link: "/apps/topology"
   },
   {
+    name: "2D Materials Database",
+    description: "To be updated...",
+    image: "/images/2DDatabaseCard.png",
+    link: "/apps/2D"
+  },
+  {
     name: "Thermoelectric Material Database",
     description: "Upcoming...",
     image: "https://ik.imagekit.io/iiscvsmanipal/thermoelectric_dUZbOhz9u?updatedAt=1639042149795",

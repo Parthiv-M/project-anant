@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useState, useEffect } from "react";
 
-export default function ResultCard({ mxene, cardType, latticeConstant, bandGap, id, idList, setIdList, loadingSetter }) {
+export default function ResultCard({ mxene, cardType, latticeConstant, bandGap, formationEnergy, id, idList, setIdList, loadingSetter }) {
 
     const [cardPreferences, setCardPreferences] = useState({
         cardLeadsToPath: "",
@@ -14,13 +14,22 @@ export default function ResultCard({ mxene, cardType, latticeConstant, bandGap, 
             setCardPreferences({
                 cardLeadsToPath: "/apps/mxene/",
                 showLatticeConstant: true,
-                showBandGap: true
+                showBandGap: true,
+                showFormationEnergy: false,
             });
         } else if (cardType === "topology") {
             setCardPreferences({
                 cardLeadsToPath: "/apps/topology/",
                 showLatticeConstant: true,
-                showBandGap: true
+                showBandGap: true,
+                showFormationEnergy: false,
+            });
+        } else if (cardType === "2D") {
+            setCardPreferences({
+                cardLeadsToPath: "/apps/2D/",
+                showLatticeConstant: true,
+                showBandGap: false,
+                showFormationEnergy: true,
             });
         }
     }, [cardType])
@@ -56,6 +65,13 @@ export default function ResultCard({ mxene, cardType, latticeConstant, bandGap, 
                     <div className="text-center mx-2">
                         <p className="md:text-xl text-lg text-gray-300">Band Gap</p>
                         <p className="text-2xl font-medium text-white">{parseFloat(bandGap).toFixed(2)}</p>
+                    </div>
+                }
+                {
+                    cardPreferences.showFormationEnergy &&
+                    <div className="text-center mx-2">
+                        <p className="md:text-xl text-lg text-gray-300">Formation Energy</p>
+                        <p className="text-2xl font-medium text-white">{parseFloat(formationEnergy).toFixed(2)}</p>
                     </div>
                 }
             </div>
