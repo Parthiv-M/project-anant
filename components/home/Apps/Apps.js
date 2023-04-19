@@ -17,7 +17,7 @@ const AppData = [
   },
   {
     name: "2D Materials Database",
-    description: "To be updated...",
+    description: "Contains details of 3099 octahedral two-dimensional materials, with downloadable POSCARs",
     image: "/images/2DDatabaseCard.png",
     link: "/apps/2D"
   },
