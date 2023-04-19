@@ -66,7 +66,7 @@ const TwoDSearchForm = (props) => {
                                             return (
                                                 <div className="mt-2" key={index}>
                                                     <p className="text-[#FAFAFA] font-light">Select {element.name}</p>
-                                                    <input type="text" className="p-2 rounded-sm w-full" placeholder={"Select a value for " + element.name} value={props[element.name]} onClick={() => props.currentlySelected(element.name)} readOnly={true} />
+                                                    <input ref={props[element.name.toLowerCase()]} type="text" className="p-2 rounded-sm w-full" placeholder={"Select a value for " + element.name} value={props[element.name]} onClick={() => props.currentlySelected(element.name)} readOnly={true} />
                                                 </div>
 
                                             )

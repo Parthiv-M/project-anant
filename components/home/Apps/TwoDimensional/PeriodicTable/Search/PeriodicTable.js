@@ -1,8 +1,25 @@
 import { TableLayout, FunctionalGroups, Metals } from "../../../../../../data/PeriodicTableData";
 
 const PeriodicTable = (props) => {
+
+    const setFunction = (target, item) => {
+        props.set_value(target, item);
+    }
+
+    const functionExecution = (target, item) => {
+        if (target === "F1" || target === "F2") {
+            if (FunctionalGroups.includes(item)) {
+                setFunction(target, item);
+            }
+        } else if (target === "M") {
+            if (Metals.includes(item)) {
+                setFunction(target, item);
+            }
+        }
+    }
+
     return (
-        <div className="bg-[#ffffff33] px-5 mt-2 rounded-sm select-none py-5 h-full hidden md:flex flex-col justify-start">
+        <div className="px-5 mt-2 rounded-sm select-none py-5 h-full hidden md:flex flex-col justify-start">
             {
                 TableLayout.map((row, index) => {
                     return (
@@ -16,7 +33,7 @@ const PeriodicTable = (props) => {
                                         return <Box key={index} item={' '} type="spacing" current={props.selected} />
                                     }
                                     else {
-                                        return <Box key={index} item={element} type="element" current={props.selected} />
+                                        return <Box key={index} item={element} type="element" current={props.selected} functionExecution={functionExecution}/>
                                     }
                                 })
                             }
@@ -53,7 +70,10 @@ const Box = (subProps) => {
             colorValue = "bg-[#ffe0b9] text-black"
         }
         return (
-            <div className={`flex hover:z-20 hover:bg-black hover:text-white transition ease-in-out hover:scale-150 hover:font-bold ${colorValue} border border-black h-9 w-full rounded-md`}>
+            <div 
+                className={`flex hover:bg-black hover:text-white transition ease-in-out hover:scale-150 hover:font-bold hover:z-10 ${colorValue} border border-black h-12 w-full rounded-md hover:cursor-pointer`}
+                onClick={() => subProps.functionExecution(subProps.current, subProps.item)}
+            >
                 <p className="self-center mx-auto text-xs font-medium">
                     {subProps.item}
                 </p>

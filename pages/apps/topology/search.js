@@ -1,9 +1,8 @@
-import { Fragment, useState } from "react"
+import { Fragment, useState, useRef } from "react"
 import { useRouter } from "next/router";
 
 import SearchForm from "../../../components/home/Apps/Mxene/Search/SearchForm";
 import PeriodicTable from "../../../components/home/Apps/Mxene/Search/PeriodicTable";
-import OptionSelector from "../../../components/home/Apps/Mxene/Search/OptionSelector";
 import toast, { Toaster } from "react-hot-toast";
 import Loader from "../../../components/common/loader";
 import Meta from "../../../components/common/Meta/Meta";
@@ -19,6 +18,11 @@ export default function MxeneSearch() {
     const [bandGap, setBandGap] = useState();
     const [currentlySelected, setCurrentlySelected] = useState("");
     const [loading, setLoading] = useState(false);
+    const m1Ref = useRef(null);
+    const m2Ref = useRef(null);
+    const xRef = useRef(null);
+    const t1Ref = useRef(null);
+    const t2Ref = useRef(null);
 
     const handleSearch = async () => {
         // have at least element filled
@@ -56,6 +60,18 @@ export default function MxeneSearch() {
 
         }
     }
+    const changeFocus = (changeTo) => {
+        if (changeTo === "M2") {
+            m2Ref.current.focus();
+        } else if (changeTo === "X") {
+            xRef.current.focus();
+        } else if (changeTo === "T1") {
+            t1Ref.current.focus();
+        } else if (changeTo === "T2") {
+            t2Ref.current.focus();
+        }
+        currentlySelectedForm(changeTo);
+    }
     const currentlySelectedForm = (formName) => {
         setCurrentlySelected(formName);
     }
@@ -70,16 +86,24 @@ export default function MxeneSearch() {
     const setElementValue = (element, value) => {
         if (element === "M1") {
             setM1(value);
+            changeFocus("M2");
+            setCurrentlySelected("M2");
         } else if (element === "M2") {
             setM2(value);
+            changeFocus("X");
+            setCurrentlySelected("X");
         } else if (element === "T1") {
             setT1(value);
+            changeFocus("T2");
+            setCurrentlySelected("T2");
         } else if (element === "T2") {
             setT2(value);
+            setCurrentlySelected("");
         } else if (element === "X") {
             setX(value);
+            changeFocus("T1");
+            setCurrentlySelected("T1");
         }
-        setCurrentlySelected("")
     }
     const setValueBandGap = (value) => {
         setBandGap(value);
@@ -98,10 +122,27 @@ export default function MxeneSearch() {
                 </div>
                 <div className="w-screen flex flex-col justify-start py-1 lg:px-16 px-6">
                     {/* The design for forms */}
-                    <SearchForm set_value={setElementValue} resetFunction={setAllFieldsEmpty} searchFunction={handleSearch} BandGap={bandGap} SetBandGap={setValueBandGap} currentlySelected={currentlySelectedForm} M1={m1} M2={m2} T1={t1} T2={t2} X={x} />
-                    <div className="hidden md:grid gap-x-2 grid-cols-1 lg:grid-cols-2">
-                        <PeriodicTable selected={currentlySelected} />
-                        <OptionSelector formSelected={currentlySelected} set_value={setElementValue} />
+                    <SearchForm 
+                        set_value={setElementValue} 
+                        resetFunction={setAllFieldsEmpty} 
+                        searchFunction={handleSearch} 
+                        BandGap={bandGap} 
+                        SetBandGap={setValueBandGap} 
+                        currentlySelected={currentlySelectedForm} 
+                        M1={m1} 
+                        M2={m2} 
+                        T1={t1} 
+                        T2={t2} 
+                        X={x} 
+                        m1={m1Ref}
+                        m2={m2Ref}
+                        x={xRef}
+                        t1={t1Ref}
+                        t2={t2Ref}
+                    />
+                    <div className="hidden md:grid gap-x-2 grid-cols-1 px-24">
+                        <PeriodicTable selected={currentlySelected} set_value={setElementValue} />
+                        {/* <OptionSelector formSelected={currentlySelected} set_value={setElementValue} /> */}
                     </div>
 
                     <Toaster position="top-right" toastOptions={{

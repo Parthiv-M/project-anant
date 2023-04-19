@@ -1,11 +1,10 @@
-import { Fragment, useState } from "react"
+import { Fragment, useState, useRef } from "react"
 import { useRouter } from "next/router";
 
 import toast, { Toaster } from "react-hot-toast";
 import Loader from "../../../components/common/loader";
 import Meta from "../../../components/common/Meta/Meta";
 import TwoDSearchForm from "../../../components/home/Apps/TwoDimensional/PeriodicTable/Search/SearchForm";
-import TwoDOptionSelector from "../../../components/home/Apps/TwoDimensional/PeriodicTable/Search/OptionSelector";
 import PeriodicTable from "../../../components/home/Apps/TwoDimensional/PeriodicTable/Search/PeriodicTable";
 
 export default function MxeneSearch() {
@@ -16,6 +15,9 @@ export default function MxeneSearch() {
     const [m, setM] = useState("");
     const [currentlySelected, setCurrentlySelected] = useState("");
     const [loading, setLoading] = useState(false);
+    const f1Ref = useRef(null);
+    const f2Ref = useRef(null);
+    const mRef = useRef(null);
 
     const handleSearch = async () => {
         // have at least element filled
@@ -35,6 +37,14 @@ export default function MxeneSearch() {
             });
         }
     }
+    const changeFocus = (changeTo) => {
+        if (changeTo === "F2") {
+            f2Ref.current.focus();
+        } else if (changeTo === "M") {
+            mRef.current.focus();
+        }
+        currentlySelectedForm(changeTo);
+    }
     const currentlySelectedForm = (formName) => {
         setCurrentlySelected(formName);
     }
@@ -46,12 +56,16 @@ export default function MxeneSearch() {
     const setElementValue = (element, value) => {
         if (element === "F1") {
             setF1(value);
+            changeFocus("F2");
+            setCurrentlySelected("F2");
         } else if (element === "F2") {
             setF2(value);
+            changeFocus("M");
+            setCurrentlySelected("M");
         } else if (element === "M") {
             setM(value);
+            setCurrentlySelected("");
         }
-        setCurrentlySelected("")
     }
 
     return (
@@ -67,10 +81,21 @@ export default function MxeneSearch() {
                 </div>
                 <div className="w-screen flex flex-col justify-start py-1 lg:px-16 px-6">
                     {/* The design for forms */}
-                    <TwoDSearchForm set_value={setElementValue} resetFunction={setAllFieldsEmpty} searchFunction={handleSearch} currentlySelected={currentlySelectedForm} F1={f1} F2={f2} M={m} />
-                    <div className="hidden md:grid gap-x-2 grid-cols-1 lg:grid-cols-2">
-                        <PeriodicTable selected={currentlySelected} />
-                        <TwoDOptionSelector formSelected={currentlySelected} set_value={setElementValue} />
+                    <TwoDSearchForm 
+                        set_value={setElementValue} 
+                        resetFunction={setAllFieldsEmpty} 
+                        searchFunction={handleSearch} 
+                        currentlySelected={currentlySelectedForm} 
+                        F1={f1} 
+                        F2={f2} 
+                        M={m} 
+                        f1={f1Ref}
+                        f2={f2Ref}
+                        m={mRef}
+                    />
+                    <div className="hidden md:grid gap-x-2 grid-cols-1 px-24">
+                        <PeriodicTable selected={currentlySelected} set_value={setElementValue} />
+                        {/* <TwoDOptionSelector formSelected={currentlySelected} set_value={setElementValue} /> */}
                     </div>
                     <Toaster position="top-right" toastOptions={{
                         className: 'mt-20',
