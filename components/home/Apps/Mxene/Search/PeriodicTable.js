@@ -76,16 +76,16 @@ const Box = (subProps) => {
         if (subProps.m1List.includes(subProps.item)) {
             colorValue = currentlySelected === "M1" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
         } 
-        else if (subProps.m2List.includes(subProps.item)) {
+        else if (subProps.m2List.includes(subProps.item) && currentlySelected === "M2") {
             colorValue = currentlySelected === "M2" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
         }
-        else if (subProps.xList.includes(subProps.item)) {
+        else if (subProps.xList.includes(subProps.item) && currentlySelected === "X") {
             colorValue = currentlySelected === "X" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
         }
-        else if (subProps.t1List.includes(subProps.item)) {
+        else if (subProps.t1List.includes(subProps.item) && currentlySelected === "T1") {
             colorValue = currentlySelected === "T1" ? "bg-white text-[#2f4d47] scale-105 hover:text-white" : "bg-[#FA5F55] text-white"
         }
-        else if (subProps.t2List.includes(subProps.item)) {
+        else if (subProps.t2List.includes(subProps.item) && currentlySelected === "T2") {
             colorValue = currentlySelected === "T2" ? "bg-white text-[#2f4d47] scale-105 hover:text-white" : "bg-[#FA5F55] text-white"
         }
         else {

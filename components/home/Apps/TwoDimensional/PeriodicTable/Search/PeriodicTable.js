@@ -67,10 +67,10 @@ const Box = (subProps) => {
         if (subProps.mList.includes(subProps.item)) {
             colorValue = currentlySelected === "M" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
         }
-        else if (subProps.f1List.includes(subProps.item)) {
+        else if (subProps.f1List.includes(subProps.item) && currentlySelected === "F1") {
             colorValue = currentlySelected === "F1" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
         }
-        else if (subProps.f2List.includes(subProps.item)) {
+        else if (subProps.f2List.includes(subProps.item) && currentlySelected === "F2") {
             colorValue = currentlySelected === "F2" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
         }
         else {
