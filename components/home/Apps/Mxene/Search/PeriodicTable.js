@@ -71,25 +71,21 @@ const Box = (subProps) => {
     }
     else {
         const currentlySelected = subProps.current === "" ? "" : subProps.current;
-        console.log(currentlySelected)
-        let colorValue;
+        let colorValue = "bg-[#ffe0b9] text-black";
         if (subProps.m1List.includes(subProps.item)) {
             colorValue = currentlySelected === "M1" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
-        } 
-        else if (subProps.m2List.includes(subProps.item) && currentlySelected === "M2") {
+        }
+        if (subProps.m2List.includes(subProps.item) && !subProps.m1List.includes(subProps.item)) {
             colorValue = currentlySelected === "M2" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
         }
-        else if (subProps.xList.includes(subProps.item) && currentlySelected === "X") {
+        if (subProps.xList.includes(subProps.item)) {
             colorValue = currentlySelected === "X" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
         }
-        else if (subProps.t1List.includes(subProps.item) && currentlySelected === "T1") {
+        if (subProps.t1List.includes(subProps.item)) {
             colorValue = currentlySelected === "T1" ? "bg-white text-[#2f4d47] scale-105 hover:text-white" : "bg-[#FA5F55] text-white"
         }
-        else if (subProps.t2List.includes(subProps.item) && currentlySelected === "T2") {
+        if (subProps.t2List.includes(subProps.item) && !subProps.t1List.includes(subProps.item)) {
             colorValue = currentlySelected === "T2" ? "bg-white text-[#2f4d47] scale-105 hover:text-white" : "bg-[#FA5F55] text-white"
-        }
-        else {
-            colorValue = "bg-[#ffe0b9] text-black"
         }
         return (
             <div

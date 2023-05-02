@@ -63,21 +63,18 @@ const Box = (subProps) => {
     }
     else {
         const currentlySelected = subProps.current === "" ? "" : subProps.current;
-        let colorValue;
+        let colorValue = "bg-[#ffe0b9] text-black";   
+        if (subProps.f1List.includes(subProps.item)) {
+            colorValue = currentlySelected === "F1" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white";
+        }
+        if (subProps.f2List.includes(subProps.item) && !subProps.f1List.includes(subProps.item)) {
+            colorValue = currentlySelected === "F2" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
+        }
         if (subProps.mList.includes(subProps.item)) {
             colorValue = currentlySelected === "M" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
         }
-        else if (subProps.f1List.includes(subProps.item) && currentlySelected === "F1") {
-            colorValue = currentlySelected === "F1" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
-        }
-        else if (subProps.f2List.includes(subProps.item) && currentlySelected === "F2") {
-            colorValue = currentlySelected === "F2" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
-        }
-        else {
-            colorValue = "bg-[#ffe0b9] text-black"
-        }
         return (
-            <div 
+            <div
                 className={`flex hover:bg-black hover:text-white transition ease-in-out hover:scale-150 hover:font-bold hover:z-10 ${colorValue} border border-black h-12 w-full rounded-md hover:cursor-pointer`}
                 onClick={() => subProps.functionExecution(subProps.current, subProps.item)}
             >
