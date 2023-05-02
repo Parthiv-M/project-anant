@@ -62,7 +62,6 @@ const TwoDSearchForm = (props) => {
                                 <div key={index} className={`grid grid-cols-${group.elements.length} gap-x-2 w-full`}>
                                     {
                                         group.elements.map((element, index) => {
-                                            console.log(props)
                                             return (
                                                 <div className="mt-2" key={index}>
                                                     <p className="text-[#FAFAFA] font-light">Select {element.name}</p>

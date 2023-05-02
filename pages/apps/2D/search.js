@@ -1,4 +1,4 @@
-import { Fragment, useState, useRef } from "react"
+import { Fragment, useState, useRef, useEffect } from "react"
 import { useRouter } from "next/router";
 
 import toast, { Toaster } from "react-hot-toast";
@@ -6,6 +6,8 @@ import Loader from "../../../components/common/loader";
 import Meta from "../../../components/common/Meta/Meta";
 import TwoDSearchForm from "../../../components/home/Apps/TwoDimensional/PeriodicTable/Search/SearchForm";
 import PeriodicTable from "../../../components/home/Apps/TwoDimensional/PeriodicTable/Search/PeriodicTable";
+
+import { FunctionalGroups, Metals } from "./../../../data/PeriodicTableData";
 
 export default function MxeneSearch() {
     const router = useRouter();
@@ -18,6 +20,52 @@ export default function MxeneSearch() {
     const f1Ref = useRef(null);
     const f2Ref = useRef(null);
     const mRef = useRef(null);
+
+    // handle suggest search
+    const [f1List, setF1List] = useState(FunctionalGroups);
+    const [f2List, setF2List] = useState(FunctionalGroups);
+    const [mList, setMList] = useState(Metals);
+
+    const suggestHandler = async () => {
+        const body = {
+            F1: f1,
+            F2: f2,
+            M: m,
+            isSuggest: true,
+            type: "2d"
+        }
+        const suggestResponse
+            = await fetch(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/suggestSearch`,
+                {
+                    method: 'POST',
+                    mode: "cors",
+                    cache: "no-cache",
+                    credentials: "same-origin",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(body)
+                },
+            );
+        const suggestions = await suggestResponse.json();
+        const f1Suggested = suggestions.suggestions.F1;
+        const f2Suggested = suggestions.suggestions.F2;
+        const mSuggested = suggestions.suggestions.M;
+        if (f1Suggested) {
+            setF1List(f1Suggested);
+        }
+        if (f2Suggested) {
+            setF2List(f2Suggested);
+        }
+        if (mSuggested) {
+            setMList(mSuggested);
+        }
+    }
+
+    useEffect(() => {
+        suggestHandler();
+    }, [f1, f2, m]);
 
     const handleSearch = async () => {
         // have at least element filled
@@ -81,20 +129,26 @@ export default function MxeneSearch() {
                 </div>
                 <div className="w-screen flex flex-col justify-start py-1 lg:px-16 px-6">
                     {/* The design for forms */}
-                    <TwoDSearchForm 
-                        set_value={setElementValue} 
-                        resetFunction={setAllFieldsEmpty} 
-                        searchFunction={handleSearch} 
-                        currentlySelected={currentlySelectedForm} 
-                        F1={f1} 
-                        F2={f2} 
-                        M={m} 
+                    <TwoDSearchForm
+                        set_value={setElementValue}
+                        resetFunction={setAllFieldsEmpty}
+                        searchFunction={handleSearch}
+                        currentlySelected={currentlySelectedForm}
+                        F1={f1}
+                        F2={f2}
+                        M={m}
                         f1={f1Ref}
                         f2={f2Ref}
                         m={mRef}
                     />
                     <div className="hidden md:grid gap-x-2 grid-cols-1 px-24">
-                        <PeriodicTable selected={currentlySelected} set_value={setElementValue} />
+                        <PeriodicTable
+                            selected={currentlySelected}
+                            set_value={setElementValue}
+                            f1List={f1List}
+                            f2List={f2List}
+                            mList={mList}
+                        />
                         {/* <TwoDOptionSelector formSelected={currentlySelected} set_value={setElementValue} /> */}
                     </div>
                     <Toaster position="top-right" toastOptions={{

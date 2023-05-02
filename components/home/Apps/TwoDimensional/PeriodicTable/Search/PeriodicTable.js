@@ -1,4 +1,4 @@
-import { TableLayout, FunctionalGroups, Metals } from "../../../../../../data/PeriodicTableData";
+import { TableLayout } from "../../../../../../data/PeriodicTableData";
 
 const PeriodicTable = (props) => {
 
@@ -7,12 +7,16 @@ const PeriodicTable = (props) => {
     }
 
     const functionExecution = (target, item) => {
-        if (target === "F1" || target === "F2") {
-            if (FunctionalGroups.includes(item)) {
+        if (target === "F1") {
+            if (props.f1List.includes(item)) {
+                setFunction(target, item);
+            }
+        } else if (target === "F2") {
+            if (props.f2List.includes(item)) {
                 setFunction(target, item);
             }
         } else if (target === "M") {
-            if (Metals.includes(item)) {
+            if (props.mList.includes(item)) {
                 setFunction(target, item);
             }
         }
@@ -27,13 +31,13 @@ const PeriodicTable = (props) => {
                             {
                                 row.map((element, index) => {
                                     if (element === "") {
-                                        return <Box key={index} item={' '} type="null" current={props.selected} />
+                                        return <Box key={index} item={' '} type="null" current={props.selected} f1List={props.f1List} f2List={props.f2List} mList={props.mList} />
                                     }
                                     else if (element === ".") {
-                                        return <Box key={index} item={' '} type="spacing" current={props.selected} />
+                                        return <Box key={index} item={' '} type="spacing" current={props.selected} f1List={props.f1List} f2List={props.f2List} mList={props.mList} />
                                     }
                                     else {
-                                        return <Box key={index} item={element} type="element" current={props.selected} functionExecution={functionExecution}/>
+                                        return <Box key={index} item={element} type="element" current={props.selected} functionExecution={functionExecution} f1List={props.f1List} f2List={props.f2List} mList={props.mList} />
                                     }
                                 })
                             }
@@ -60,11 +64,14 @@ const Box = (subProps) => {
     else {
         const currentlySelected = subProps.current === "" ? "" : subProps.current;
         let colorValue;
-        if (Metals.includes(subProps.item)) {
+        if (subProps.mList.includes(subProps.item)) {
             colorValue = currentlySelected === "M" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
         }
-        else if (FunctionalGroups.includes(subProps.item)) {
-            colorValue = currentlySelected === "F1" || currentlySelected === "F2" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
+        else if (subProps.f1List.includes(subProps.item)) {
+            colorValue = currentlySelected === "F1" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
+        }
+        else if (subProps.f2List.includes(subProps.item)) {
+            colorValue = currentlySelected === "F2" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
         }
         else {
             colorValue = "bg-[#ffe0b9] text-black"
