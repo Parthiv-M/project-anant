@@ -87,11 +87,11 @@ const Box = (subProps) => {
         if (currentlySelected === "M1" && subProps.m1List.includes(subProps.item)) {
             colorValue = activeTile;
         } else if (currentlySelected === "M1" && !subProps.m1List.includes(subProps.item) && M_Values.includes(subProps.item)) {
-            colorValue = m1Normal;
+            colorValue = m1Normal + " blur-[1px]";
         } else if (currentlySelected === "M1" && !subProps.m1List.includes(subProps.item) && X_Values.includes(subProps.item)) {
-            colorValue = xNormal;
+            colorValue = xNormal + " blur-[1px]";
         } else if (currentlySelected === "M1" && !subProps.m1List.includes(subProps.item) && T_Values.includes(subProps.item)) {
-            colorValue = t1Normal;
+            colorValue = t1Normal + " blur-[1px]";
         } else if (currentlySelected !== "M1" && subProps.m1List.includes(subProps.item)) {
             // pass
         }
@@ -99,13 +99,13 @@ const Box = (subProps) => {
         if (currentlySelected === "M2" && subProps.m2List.includes(subProps.item)) {
             colorValue = activeTile;
         } else if (currentlySelected === "M2" && !subProps.m2List.includes(subProps.item) && M_Values.includes(subProps.item)) {
-            colorValue = m2Normal;
+            colorValue = m2Normal + " blur-[1px]";
         } else if (currentlySelected === "M2" && !subProps.m2List.includes(subProps.item) && X_Values.includes(subProps.item)) {
-            colorValue = xNormal;
+            colorValue = xNormal + " blur-[1px]";
         } else if (currentlySelected === "M2" && !subProps.m2List.includes(subProps.item) && T_Values.includes(subProps.item)) {
-            colorValue = t1Normal;
+            colorValue = t1Normal + " blur-[1px]";
         } else if (currentlySelected !== "M2" && subProps.m2List.includes(subProps.item) && !subProps.m1List.includes(subProps.item)) {
-            colorValue = m2Normal;
+            colorValue = m2Normal + " blur-[1px]";
         } else if (currentlySelected !== "M2" && subProps.m2List.includes(subProps.item)) {
             // pass
         }
@@ -113,21 +113,21 @@ const Box = (subProps) => {
         if (currentlySelected === "X" && subProps.xList.includes(subProps.item)) {
             colorValue = activeTile;
         } else if (currentlySelected === "X" && !subProps.xList.includes(subProps.item) && X_Values.includes(subProps.item)) {
-            colorValue = xNormal;
+            colorValue = xNormal + " blur-[1px]";
         } else if (currentlySelected === "X" && !subProps.xList.includes(subProps.item) && M_Values.includes(subProps.item)) {
-            colorValue = m1Normal;
+            colorValue = m1Normal + " blur-[1px]";
         } else if (currentlySelected === "X" && !subProps.xList.includes(subProps.item) && T_Values.includes(subProps.item)) {
-            colorValue = t1Normal;
+            colorValue = t1Normal + " blur-[1px]";
         }
 
         if (currentlySelected === "T1" && subProps.t1List.includes(subProps.item)) {
             colorValue = activeTile;
         } else if (currentlySelected === "T1" && !subProps.t1List.includes(subProps.item) && T_Values.includes(subProps.item)) {
-            colorValue = t1Normal;
+            colorValue = t1Normal + " blur-[1px]";
         } else if (currentlySelected === "T1" && !subProps.t1List.includes(subProps.item) && M_Values.includes(subProps.item)) {
-            colorValue = m2Normal;
+            colorValue = m2Normal + " blur-[1px]";
         } else if (currentlySelected === "T1" && !subProps.t1List.includes(subProps.item) && X_Values.includes(subProps.item)) {
-            colorValue = xNormal;
+            colorValue = xNormal + " blur-[1px]";
         } else if (currentlySelected !== "T1" && subProps.t1List.includes(subProps.item)) {
             // pass
         }
@@ -135,13 +135,13 @@ const Box = (subProps) => {
         if (currentlySelected === "T2" && subProps.t2List.includes(subProps.item)) {
             colorValue = activeTile;
         } else if (currentlySelected === "T2" && !subProps.t2List.includes(subProps.item) && T_Values.includes(subProps.item)) {
-            colorValue = t2Normal;
+            colorValue = t2Normal + " blur-[1px]";
         } else if (currentlySelected === "T2" && !subProps.t2List.includes(subProps.item) && M_Values.includes(subProps.item)) {
-            colorValue = m2Normal;
+            colorValue = m2Normal + " blur-[1px]";
         } else if (currentlySelected === "T2" && !subProps.t2List.includes(subProps.item) && X_Values.includes(subProps.item)) {
-            colorValue = xNormal;
+            colorValue = xNormal + " blur-[1px]";
         } else if (currentlySelected !== "T2" && subProps.t2List.includes(subProps.item) && !subProps.t1List.includes(subProps.item)) {
-            colorValue = t2Normal;
+            colorValue = t2Normal + " blur-[1px]";
         } else if (currentlySelected !== "T2" && subProps.t2List.includes(subProps.item)) {
             // pass
         }
@@ -154,6 +154,8 @@ const Box = (subProps) => {
             } else if (T_Values.includes(subProps.item)) {
                 colorValue = t1Normal;
             }
+        } else if (colorValue === defaultBg) {
+            colorValue += " blur-[1px]";
         }
 
         return (

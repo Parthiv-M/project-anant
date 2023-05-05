@@ -75,9 +75,9 @@ const Box = (subProps) => {
         if (currentlySelected === "F1" && subProps.f1List.includes(subProps.item)) {
             colorValue = activeTile;
         } else if (currentlySelected === "F1" && !subProps.f1List.includes(subProps.item) && FunctionalGroups.includes(subProps.item)) {
-            colorValue = f1Normal;
+            colorValue = f1Normal + " blur-[1px]";
         } else if (currentlySelected === "F1" && !subProps.f1List.includes(subProps.item) && Metals.includes(subProps.item)) {
-            colorValue = mNormal;
+            colorValue = mNormal + " blur-[1px]";
         } else if (currentlySelected !== "F1" && subProps.f1List.includes(subProps.item)) {
             // pass
         }
@@ -85,11 +85,11 @@ const Box = (subProps) => {
         if (currentlySelected === "F2" && subProps.f2List.includes(subProps.item)) {
             colorValue = activeTile;
         } else if (currentlySelected === "F2" && !subProps.f2List.includes(subProps.item) && FunctionalGroups.includes(subProps.item)) {
-            colorValue = f2Normal;
+            colorValue = f2Normal + " blur-[1px]";
         } else if (currentlySelected === "F2" && !subProps.f2List.includes(subProps.item) && Metals.includes(subProps.item)) {
-            colorValue = mNormal;
+            colorValue = mNormal + " blur-[1px]";
         } else if (currentlySelected !== "F2" && subProps.f2List.includes(subProps.item) && !subProps.f1List.includes(subProps.item)) {
-            colorValue = f2Normal;
+            colorValue = f2Normal + " blur-[1px]";
         } else if (currentlySelected !== "F2" && subProps.f2List.includes(subProps.item)) {
             // pass
         }
@@ -97,9 +97,9 @@ const Box = (subProps) => {
         if (currentlySelected === "M" && subProps.mList.includes(subProps.item)) {
             colorValue = activeTile;
         } else if (currentlySelected === "M" && !subProps.mList.includes(subProps.item) && Metals.includes(subProps.item)) {
-            colorValue = mNormal;
+            colorValue = mNormal + " blur-[1px]";
         } else if (currentlySelected === "M" && !subProps.mList.includes(subProps.item) && FunctionalGroups.includes(subProps.item)) {
-            colorValue = f1Normal;
+            colorValue = f1Normal + " blur-[1px]";
         }
 
         if (currentlySelected === "") {
@@ -108,6 +108,8 @@ const Box = (subProps) => {
             } else if (Metals.includes(subProps.item)) {
                 colorValue = mNormal;
             }
+        } else if (colorValue === defaultBg) {
+            colorValue += " blur-[1px]";
         }
 
         return (
