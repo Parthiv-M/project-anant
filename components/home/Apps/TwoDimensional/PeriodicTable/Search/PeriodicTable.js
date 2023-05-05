@@ -1,4 +1,4 @@
-import { TableLayout } from "../../../../../../data/PeriodicTableData";
+import { FunctionalGroups, Metals, TableLayout } from "../../../../../../data/PeriodicTableData";
 
 const PeriodicTable = (props) => {
 
@@ -63,16 +63,53 @@ const Box = (subProps) => {
     }
     else {
         const currentlySelected = subProps.current === "" ? "" : subProps.current;
-        let colorValue = "bg-[#ffe0b9] text-black";   
-        if (subProps.f1List.includes(subProps.item)) {
-            colorValue = currentlySelected === "F1" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white";
+        
+        let activeTile = "bg-white text-[#004a77] scale-105 hover:text-white";
+        let f1Normal = "bg-[#5172b0] text-white";
+        let f2Normal = "bg-[#5172b0] text-white";
+        let mNormal = "bg-[#a0d173] text-white";
+        let defaultBg = "bg-[#ffe0b9] text-black";
+
+        let colorValue = defaultBg;
+
+        if (currentlySelected === "F1" && subProps.f1List.includes(subProps.item)) {
+            colorValue = activeTile;
+        } else if (currentlySelected === "F1" && !subProps.f1List.includes(subProps.item) && FunctionalGroups.includes(subProps.item)) {
+            colorValue = f1Normal;
+        } else if (currentlySelected === "F1" && !subProps.f1List.includes(subProps.item) && Metals.includes(subProps.item)) {
+            colorValue = mNormal;
+        } else if (currentlySelected !== "F1" && subProps.f1List.includes(subProps.item)) {
+            // pass
         }
-        if (subProps.f2List.includes(subProps.item) && !subProps.f1List.includes(subProps.item)) {
-            colorValue = currentlySelected === "F2" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
+
+        if (currentlySelected === "F2" && subProps.f2List.includes(subProps.item)) {
+            colorValue = activeTile;
+        } else if (currentlySelected === "F2" && !subProps.f2List.includes(subProps.item) && FunctionalGroups.includes(subProps.item)) {
+            colorValue = f2Normal;
+        } else if (currentlySelected === "F2" && !subProps.f2List.includes(subProps.item) && Metals.includes(subProps.item)) {
+            colorValue = mNormal;
+        } else if (currentlySelected !== "F2" && subProps.f2List.includes(subProps.item) && !subProps.f1List.includes(subProps.item)) {
+            colorValue = f2Normal;
+        } else if (currentlySelected !== "F2" && subProps.f2List.includes(subProps.item)) {
+            // pass
         }
-        if (subProps.mList.includes(subProps.item)) {
-            colorValue = currentlySelected === "M" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
+        
+        if (currentlySelected === "M" && subProps.mList.includes(subProps.item)) {
+            colorValue = activeTile;
+        } else if (currentlySelected === "M" && !subProps.mList.includes(subProps.item) && Metals.includes(subProps.item)) {
+            colorValue = mNormal;
+        } else if (currentlySelected === "M" && !subProps.mList.includes(subProps.item) && FunctionalGroups.includes(subProps.item)) {
+            colorValue = f1Normal;
         }
+
+        if (currentlySelected === "") {
+            if (FunctionalGroups.includes(subProps.item)) {
+                colorValue = f1Normal;
+            } else if (Metals.includes(subProps.item)) {
+                colorValue = mNormal;
+            }
+        }
+
         return (
             <div
                 className={`flex hover:bg-black hover:text-white transition ease-in-out hover:scale-150 hover:font-bold hover:z-10 ${colorValue} border border-black h-12 w-full rounded-md hover:cursor-pointer`}

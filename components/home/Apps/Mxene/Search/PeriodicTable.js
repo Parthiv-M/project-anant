@@ -1,4 +1,5 @@
-import { TableLayout } from "../../../../../data/PeriodicTableData"
+import { TableLayout } from "../../../../../data/PeriodicTableData";
+import { M_Values, T_Values, X_Values } from "../../../../../data/PeriodicTableData";
 
 const PeriodicTable = (props) => {
 
@@ -7,6 +8,7 @@ const PeriodicTable = (props) => {
     }
 
     const functionExecution = (target, item) => {
+        console.log("ti: ", target, item);
         if (target === "M1") {
             if (props.m1List.includes(item)) {
                 setFunction(target, item);
@@ -71,22 +73,89 @@ const Box = (subProps) => {
     }
     else {
         const currentlySelected = subProps.current === "" ? "" : subProps.current;
-        let colorValue = "bg-[#ffe0b9] text-black";
-        if (subProps.m1List.includes(subProps.item)) {
-            colorValue = currentlySelected === "M1" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
+
+        let activeTile = "bg-white text-[#004a77] scale-105 hover:text-white";
+        let m1Normal = "bg-[#5172b0] text-white";
+        let m2Normal = "bg-[#5172b0] text-white";
+        let xNormal = "bg-[#a0d173] text-white";
+        let t1Normal = "bg-[#FA5F55] text-white";
+        let t2Normal = "bg-[#FA5F55] text-white";
+        let defaultBg = "bg-[#ffe0b9] text-black";
+
+        let colorValue = defaultBg;
+
+        if (currentlySelected === "M1" && subProps.m1List.includes(subProps.item)) {
+            colorValue = activeTile;
+        } else if (currentlySelected === "M1" && !subProps.m1List.includes(subProps.item) && M_Values.includes(subProps.item)) {
+            colorValue = m1Normal;
+        } else if (currentlySelected === "M1" && !subProps.m1List.includes(subProps.item) && X_Values.includes(subProps.item)) {
+            colorValue = xNormal;
+        } else if (currentlySelected === "M1" && !subProps.m1List.includes(subProps.item) && T_Values.includes(subProps.item)) {
+            colorValue = t1Normal;
+        } else if (currentlySelected !== "M1" && subProps.m1List.includes(subProps.item)) {
+            // pass
         }
-        if (subProps.m2List.includes(subProps.item) && !subProps.m1List.includes(subProps.item)) {
-            colorValue = currentlySelected === "M2" ? "bg-white text-[#004a77] scale-105 hover:text-white" : "bg-[#5172b0] text-white"
+
+        if (currentlySelected === "M2" && subProps.m2List.includes(subProps.item)) {
+            colorValue = activeTile;
+        } else if (currentlySelected === "M2" && !subProps.m2List.includes(subProps.item) && M_Values.includes(subProps.item)) {
+            colorValue = m2Normal;
+        } else if (currentlySelected === "M2" && !subProps.m2List.includes(subProps.item) && X_Values.includes(subProps.item)) {
+            colorValue = xNormal;
+        } else if (currentlySelected === "M2" && !subProps.m2List.includes(subProps.item) && T_Values.includes(subProps.item)) {
+            colorValue = t1Normal;
+        } else if (currentlySelected !== "M2" && subProps.m2List.includes(subProps.item) && !subProps.m1List.includes(subProps.item)) {
+            colorValue = m2Normal;
+        } else if (currentlySelected !== "M2" && subProps.m2List.includes(subProps.item)) {
+            // pass
         }
-        if (subProps.xList.includes(subProps.item)) {
-            colorValue = currentlySelected === "X" ? "bg-white text-[#613b28] scale-105 hover:text-white" : "bg-[#a0d173] text-white"
+
+        if (currentlySelected === "X" && subProps.xList.includes(subProps.item)) {
+            colorValue = activeTile;
+        } else if (currentlySelected === "X" && !subProps.xList.includes(subProps.item) && X_Values.includes(subProps.item)) {
+            colorValue = xNormal;
+        } else if (currentlySelected === "X" && !subProps.xList.includes(subProps.item) && M_Values.includes(subProps.item)) {
+            colorValue = m1Normal;
+        } else if (currentlySelected === "X" && !subProps.xList.includes(subProps.item) && T_Values.includes(subProps.item)) {
+            colorValue = t1Normal;
         }
-        if (subProps.t1List.includes(subProps.item)) {
-            colorValue = currentlySelected === "T1" ? "bg-white text-[#2f4d47] scale-105 hover:text-white" : "bg-[#FA5F55] text-white"
+
+        if (currentlySelected === "T1" && subProps.t1List.includes(subProps.item)) {
+            colorValue = activeTile;
+        } else if (currentlySelected === "T1" && !subProps.t1List.includes(subProps.item) && T_Values.includes(subProps.item)) {
+            colorValue = t1Normal;
+        } else if (currentlySelected === "T1" && !subProps.t1List.includes(subProps.item) && M_Values.includes(subProps.item)) {
+            colorValue = m2Normal;
+        } else if (currentlySelected === "T1" && !subProps.t1List.includes(subProps.item) && X_Values.includes(subProps.item)) {
+            colorValue = xNormal;
+        } else if (currentlySelected !== "T1" && subProps.t1List.includes(subProps.item)) {
+            // pass
         }
-        if (subProps.t2List.includes(subProps.item) && !subProps.t1List.includes(subProps.item)) {
-            colorValue = currentlySelected === "T2" ? "bg-white text-[#2f4d47] scale-105 hover:text-white" : "bg-[#FA5F55] text-white"
+
+        if (currentlySelected === "T2" && subProps.t2List.includes(subProps.item)) {
+            colorValue = activeTile;
+        } else if (currentlySelected === "T2" && !subProps.t2List.includes(subProps.item) && T_Values.includes(subProps.item)) {
+            colorValue = t2Normal;
+        } else if (currentlySelected === "T2" && !subProps.t2List.includes(subProps.item) && M_Values.includes(subProps.item)) {
+            colorValue = m2Normal;
+        } else if (currentlySelected === "T2" && !subProps.t2List.includes(subProps.item) && X_Values.includes(subProps.item)) {
+            colorValue = xNormal;
+        } else if (currentlySelected !== "T2" && subProps.t2List.includes(subProps.item) && !subProps.t1List.includes(subProps.item)) {
+            colorValue = t2Normal;
+        } else if (currentlySelected !== "T2" && subProps.t2List.includes(subProps.item)) {
+            // pass
         }
+
+        if (currentlySelected === "") {
+            if (M_Values.includes(subProps.item)) {
+                colorValue = m1Normal;
+            } else if (X_Values.includes(subProps.item)) {
+                colorValue = xNormal;
+            } else if (T_Values.includes(subProps.item)) {
+                colorValue = t1Normal;
+            }
+        }
+
         return (
             <div
                 className={`flex hover:bg-black hover:text-white transition ease-in-out hover:scale-150 hover:font-bold hover:z-10 ${colorValue} border border-black h-12 w-full rounded-md hover:cursor-pointer`}
