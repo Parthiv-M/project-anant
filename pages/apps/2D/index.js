@@ -33,7 +33,7 @@ export default function TwoDMaterials() {
                     <p className="md:text-xl text-lg text-white lg:text-justify">
                         Octahedral two-dimensional materials are considered to be promising photocatalysts. Apart from catalysis, these materials also have 
                         extensive applications in spintronics, 2D ferromagnets, quantum computers, and topological insulators, to name a few.  A database of 
-                        3099 octahedral 2D materials, termed as 2DO database is available with their calculated properties to date. 
+                        3099 octahedral 2D materials, termed as 2DO database, is available with their calculated properties. 
                     </p>
                     <Link href="/apps/2D/search">
                         <button

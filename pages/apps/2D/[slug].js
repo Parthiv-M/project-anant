@@ -64,7 +64,7 @@ export default function MxeneResult({ twoDData, slug }) {
                 <h2 className="md:text-4xl text-3xl font-bold text-white">{twoDData.compound}</h2>
                 <div className="w-56 mx-auto my-2 h-1 bg-gray-100"></div>
             </div>
-            <div className="lg:p-24 p-8 grid lg:grid-cols-2 grid-cols-1 gap-2">
+            <div className="lg:p-12 p-4 grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-2">
                 <div className="min-h-[40vh] h-full w-full flex justify-center items-center result-card rounded-lg" id="apphere">
                     {Model3D}
                 </div>
@@ -94,7 +94,7 @@ export default function MxeneResult({ twoDData, slug }) {
                             <h5 className="text-lg">Hull Energy (eV)</h5>
                         </div>
                         <div className="bg-gray-200 flex flex-col items-center justify-center rounded-lg p-2 text-center">
-                            <h4 className="md:text-3xl text-2xl theme-text font-bold">{twoDData.phononFreq}</h4>
+                            <h4 className="md:text-3xl text-2xl theme-text font-bold">{Number(parseFloat(twoDData.phononFreq).toFixed(5)).toExponential()}</h4>
                             <h5 className="text-lg">Phonon Frequency (abs)</h5>
                         </div>
                     </div>
