@@ -1,14 +1,18 @@
+import axios from "axios";
 import { useState } from "react";
+import { saveAs } from "file-saver";
+import b64ToBlob from "b64-to-blob";
 
-export default function Modal({ isOpen, setIsOpen }) {
+export default function Modal({ isOpen, setIsOpen, dbType }) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [isValidEmail, setIsValidEmail] = useState(undefined);
-  const [showPassword, setShowPassword] = useState(false);
-  const [isCopied, setIsCopied] = useState(false);
-  const [password, setPassword] = useState()
-  const [zipLink, setZipLink] = useState("")
+  const [designation, setDesignation] = useState("");
+  const [organisation, setOrganisation] = useState("");
+  const [reason, setReason] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [loading, setLoading] = useState(null);
+  const [downloadSuccessful, setDownloadSuccessful] = useState(null);
+  const [error, setError] = useState({ errorFor: "", errorType: "" });
 
   const validateEmail = (email) => {
     return String(email)
@@ -18,101 +22,226 @@ export default function Modal({ isOpen, setIsOpen }) {
       );
   };
 
-  const submitEmail = () => {
-    if (validateEmail(email)) {
+  const handleInputValidation = () => {
+    if (name === "") {
+      setError({ errorFor: "name", errorType: "empty" });
+      return false;
+    }
+    if (email === "") {
+      setError({ errorFor: "email", errorType: "empty" });
+      return false;
+    } else if (email !== "" && !validateEmail(email)) {
+      setError({ errorFor: "email", errorType: "invalid" });
+      return false;
+    }
+    if (designation === "") {
+      setError({ errorFor: "designation", errorType: "empty" });
+      return false;
+    }
+    if (organisation === "") {
+      setError({ errorFor: "organisation", errorType: "empty" });
+      return false;
+    }
+    if (reason === "") {
+      setError({ errorFor: "reason", errorType: "empty" });
+      return false;
+    }
+    console.log("agreed: ", agreed)
+    if (agreed === false) {
+      setError({ errorFor: "agreed", errorType: "empty" });
+      return false;
+    }
+    setError({ errorFor: "", errorType: "" });
+    return true;
+  }
+
+  const resetState = () => {
+    setName("");
+    setEmail("");
+    setDesignation("");
+    setOrganisation("");
+    setReason("");
+    setAgreed("");
+    setLoading(null);
+    setDownloadSuccessful(null);
+    setError({ errorFor: "", errorType: "" });
+  }
+
+  const downloadDatabase = async (e) => {
+    e.preventDefault();
+    if (handleInputValidation()) {
+      let downloadInfo = {
+        fullName: name,
+        email,
+        designation,
+        organisation,
+        reason
+      }
       setLoading(true);
-      // send email to server and receive zip file password
-      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/email`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-        }),
-      }).then(async (res) => {
-        const response = await res.json();
-        if(!response) {
-          setIsError(true);
+      try {
+        const apiResult = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/dbdownload/${dbType}`, downloadInfo);
+        if (apiResult.status === 200) {
+          const blob = b64ToBlob(apiResult.data, "application/zip");
+          saveAs(blob, 'database.zip');
+          setDownloadSuccessful(true);
+          setLoading(false);
         }
-        if (res.status === 200) {
-          setIsError(false);
-          setIsValidEmail(true);
-          setShowPassword(true);
-          setPassword(response.password);
-          setZipLink(response.zipLink);
-        }
-      }).catch((err) => {
-        console.log(err);
-        setIsError(true);
-      }).finally(() => {
+      } catch (error) {
+        setDownloadSuccessful(false);
         setLoading(false);
-      })
-    } else {
-      setIsValidEmail(false);
-      setLoading(false);
+      } finally {
+        if (!loading && downloadSuccessful) {
+          setTimeout(() => {
+            resetState();
+            setIsOpen(false);
+          }, 5000);
+        }
+      }
     }
   }
 
-  const copyToClipboard = () => {
-    let textToCopy = password;
-    navigator.clipboard.writeText(textToCopy);
-    setIsCopied(true);
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 3000)
+  const getDB = (dbType) => {
+    let dbName = "";
+    let colour = "";
+
+    switch (dbType) {
+      case "mxene":
+        dbName = "MXene";
+        colour = "blue";
+        break;
+      case "2d":
+        dbName = "2D Octahedral Materials";
+        colour = "pink";
+        break;
+      case "topology":
+        dbName = "Topological Materials";
+        colour = "red";
+        break;
+      case "thermoelectric":
+        dbName = "Thermoelectric";
+        colour = "green";
+        break;
+      default:
+        dbName = "Name";
+        break;
+    }
+
+    return { dbName, colour };
   }
 
   return (
-    isOpen && <div className="z-20 px-4 fixed inset-0 h-screen w-screen overflow-hidden flex flex-col gap-3 items-center justify-center bg-[#00000099]">
-      <div className="py-10 px-5 bg-gray-100 rounded-xl flex flex-col justify-center items-start">
-        <p className="theme-text text-md">Please enter your email ID to download the entire dataset</p>
-        <input
-          className="w-full px-2 py-3 mt-1 border-2 border-blue-200 rounded-lg outline-none"
-          placeholder="abc.xyz@gmail.com"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {isValidEmail && isValidEmail != undefined && <p className="text-sm text-green-600"><span><i className="fa fa-check mr-1"></i>Valid Email</span></p>}
-        {!isValidEmail && isValidEmail != undefined && <p className="text-sm text-red-700"><span><i className="fa fa-exclamation-circle mr-1"></i></span>Invalid Email</p>}
-        {!isValidEmail && !isError && <button
-          className="w-full theme mt-4 py-3 rounded-lg text-gray-100 outline-none hover:font-bold"
-          onClick={submitEmail}
-        >
-          { !loading ? "Submit" : <><span><i className="fa fa-circle-o-notch mr-2 animate-spin"></i></span><span>Verifying</span></>}
-        </button>}
-        {
-          isError && <div
-          className="w-full text-center bg-red-700 mt-4 py-3 rounded-sm text-gray-100 outline-none font-bold"
-          onClick={submitEmail}
-        >
-          <span><i className="fa fa-exclamation-triangle mr-2"></i></span>There seems to be an error, try later!
-        </div>
-        }
-        <button
-          className="w-full border border-gray-300 mt-2 py-3 rounded-lg text-gray-900 outline-none hover:font-bold"
-          onClick={() => { setIsOpen(false); setIsValidEmail(undefined); setShowPassword(false); setIsError(false); setLoading(false) }}
-        >Close</button>
-      </div>
-      {
-        showPassword && isValidEmail && <div className="py-4 px-14 bg-gray-100 rounded-xl flex flex-col justify-center items-start">
-          <p className="theme-text text-md">The password to open the <monospace>.zip</monospace> file is given below</p>
-          <div className="w-full mt-1 px-3 py-2 bg-gray-700 text-gray-200 rounded-md flex justify-between items-center">
-            {
-              loading 
-              ? <><span><i className="fa fa-circle-o-notch mr-2 animate-spin"></i></span><span>Loading</span></> 
-              : <pre>{password}</pre>
-            }
-            <div className="flex items-center">
-              {isCopied && <p className="text-green-400 mr-1 text-sm">Copied</p>}
-              {!isCopied && <i className="fa fa-copy hover:bg-gray-800 cursor-pointer p-2 rounded-full" onClick={copyToClipboard}></i>}
-              {isCopied && <i className="fa fa-check bg-green-400 p-2 rounded-full"></i>}
-            </div>
+    isOpen
+    &&
+    <div className="z-20 px-4 fixed inset-0 h-screen w-screen overflow-hidden flex flex-col gap-3 items-center justify-center bg-[#00000099]">
+      <div className="bg-black md:p-8 p-4 rounded-lg lg:w-1/3 w-full fade-up">
+        <h5 className={`text-${getDB(dbType).colour}-400 font-bold text-sm`}>
+          <span className={`h-2 w-2 bg-${getDB(dbType).colour}-400 inline-block rounded-full mr-1`}></span>
+          <span className={`h-2 w-2 bg-${getDB(dbType).colour}-400 inline-block rounded-full mr-1 `}></span>
+          <span className={`h-2 w-2 bg-${getDB(dbType).colour}-400 inline-block rounded-full mr-1`}></span>
+          {getDB(dbType).dbName} Database
+        </h5>
+        <h4 className="text-white text-xl font-bold mb-4">
+          <i class="fa fa-info-circle" aria-hidden="true"></i> User Information for Database Download
+        </h4>
+        <form className="w-full">
+          <InputField
+            labelName={"Full Name"}
+            isRequired={true}
+            controller={setName}
+            isError={error.errorFor === "name"}
+            errorText={"Name cannot be empty"}
+          />
+          <InputField
+            labelName={"Email ID"}
+            isRequired={true}
+            controller={setEmail}
+            isError={error.errorFor === "email"}
+            errorText={error.errorType === "empty" ? "Email ID cannot be empty" : "Invalid email"}
+          />
+          <div className="md:flex gap-4">
+            <InputField
+              labelName={"Designation"}
+              isRequired={true}
+              controller={setDesignation}
+              isError={error.errorFor === "designation"}
+              errorText={"Designation cannot be empty"}
+            />
+            <InputField
+              labelName={"Organisation"}
+              isRequired={true}
+              controller={setOrganisation}
+              isError={error.errorFor === "organisation"}
+              errorText={"Organisation cannot be empty"}
+            />
           </div>
-          <button className="w-full text-sm border bg-gray-200 border-gray-300 mt-2 py-3 rounded-lg text-gray-900 outline-none hover:font-bold" onClick={() => window.open(zipLink, '_blank').focus()}>
-            Download <pre className="inline">.zip</pre>
+          <div className="flex flex-col">
+            <label className="text-white text-sm"><span className="text-red-500">*</span> Reason for download</label>
+            <textarea
+              className="bg-white/80 focus:bg-white outline-none p-2 text-sm rounded-md"
+              placeholder="Tell us, briefly, why you want the data"
+              onChange={(e) => setReason(e.target.value)}
+            />
+          </div>
+          <div className="mt-2">
+            <input name="readandagree" type="checkbox" className="mr-1" onChange={(e) => { setAgreed(e.target.checked) }} />
+            <label className="text-gray-500 text-sm" htmlFor="readandagree">
+              I confirm that I have read and agreed to the
+              <a className="text-blue-300" href="/privacypolicy" target="_blank"> Privacy Policy</a> and the
+              <a className="text-blue-300" href="/termsandconditions" target="_blank"> Terms and Agreements </a>
+              of using aNANt
+            </label>
+            {error.errorFor === "agreed" && <p className="text-red-500 text-[12px]">Please accept terms and conditions to continue</p>}
+          </div>
+          <div className="flex gap-2 items-center mt-2">
+            <button
+              className={`theme disabled:opacity-70 disabled:cursor-not-allowed w-full py-2 rounded-lg text-white border border-transparent hover:border-white/30`}
+              onClick={(e) => downloadDatabase(e)}
+              disabled={loading}
+            >
+              {(loading === null || (!loading && downloadSuccessful)) && "Submit details"}
+              {loading !== null && !loading && !downloadSuccessful && "Try Again"}
+              {loading !== null && loading && <span><i class="fa fa-circle-o-notch animate-spin" aria-hidden="true"></i> Downloading</span>}
+            </button>
+            {
+              (loading !== null && !loading && !downloadSuccessful) &&
+              <div className="theme text-white py-2 px-4 rounded-md opacity-80 cursor-auto">
+                <i className="fa fa-refresh" aria-hidden="true"></i>
+              </div>
+            }
+          </div>
+          <button
+            className="bg-white/30 disabled:opacity-40 disabled:cursor-not-allowed disabled:border-transparent 
+                    w-full mt-2 py-2 rounded-lg text-gray-100 border border-transparent hover:border-white/50"
+            onClick={() => { resetState(); setIsOpen(false) }}
+            disabled={loading}
+          >
+            Cancel
           </button>
-        </div>
-      }
+        </form>
+        <div></div>
+      </div>
+      <style>{`
+        textarea {
+          min-height: 100px;
+          max-height: 200px;
+        }
+        input::placeholder, textarea::placeholder {
+          color: #00000099;
+        }
+      `}</style>
     </div >
+  )
+}
+
+const InputField = ({ labelName, isRequired, controller, isError, errorText }) => {
+  return (
+    <div className="flex flex-col flex-grow my-2">
+      <label className="text-white text-sm">{isRequired && <span className="text-red-500">*</span>} {labelName}</label>
+      <input
+        className="bg-white/80 focus:bg-white outline-none p-2 text-sm rounded-md"
+        onChange={(e) => controller(e.target.value)}
+      />
+      {isError && <p className="text-red-500 text-[12px]">{errorText}</p>}
+    </div>
   )
 }

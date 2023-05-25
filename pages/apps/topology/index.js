@@ -31,11 +31,11 @@ export default function Mxene() {
                 </div>
                 <div className="lg:w-1/2 w-full px-8 pt-5 md:pt-0 text-center flex flex-col-reverse lg:flex-col">
                     <p className="md:text-xl text-lg text-white lg:text-justify">
-                        MXenes are one of the best classes of material to search for the Quantum Anomalous Hall Effect (QAHE) effect 
-                        as its SOC strength and magnetism can be tuned by replacing the transition metals and/or by functionalizing 
-                        the surfaces. The discovery of new topological materials with exotic properties for spintronics and quantum 
-                        computation applications has gained remarkable research attention in condensed matter physics and material science. 
-                        A large class of MXene monolayers exhibiting the exotic topological phases is available in the database and it 
+                        MXenes are one of the best classes of material to search for the Quantum Anomalous Hall Effect (QAHE) effect
+                        as its SOC strength and magnetism can be tuned by replacing the transition metals and/or by functionalizing
+                        the surfaces. The discovery of new topological materials with exotic properties for spintronics and quantum
+                        computation applications has gained remarkable research attention in condensed matter physics and material science.
+                        A large class of MXene monolayers exhibiting the exotic topological phases is available in the database and it
                         is planned to add more new topological materials in the future.
                     </p>
                     <Link href="/apps/topology/search">
@@ -46,31 +46,25 @@ export default function Mxene() {
                             Go to search
                         </button>
                     </Link>
-                    {/* uncomment when required */}
-                    {/* <Fragment>
+                    <Fragment>
                         {
                             loggedIn ?
-                                <a 
-                                    className="" 
-                                    href="https://drive.google.com/file/d/1_oq6_eObSqUVOon_a-QFYhLeVUIk6qbh/view?usp=sharing" 
-                                    target="_blank" 
-                                    rel="noreferrer"
+                                <button
+                                    onClick={() => setIsOpen(true)}
+                                    className="w-full theme bg-gray-300 theme-text rounded-md text-lg px-4 py-3 hover:translate-y-1 outline-none"
                                 >
-                                    <button
-                                        // onClick={() => setIsOpen(true)}
-                                        className="w-full theme bg-gray-300 theme-text rounded-md text-lg px-4 py-3 hover:translate-y-1 outline-none"
-                                    >
-                                        <span><i className="fa fa-database mr-2"></i></span>
-                                        Download full database
-                                    </button>
-                                </a> : <p className='text-gray-300'>(Login to download the entire database)</p>
+                                    <span><i className="fa fa-database mr-2"></i></span>
+                                    Download full database
+                                </button>
+                                : <p className='text-gray-300'>(Login to download the entire database)</p>
                         }
-                    </Fragment> */}
+                    </Fragment>
                 </div>
             </div>
             <Modal
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                dbType={"topology"}
             />
         </div>
     )
