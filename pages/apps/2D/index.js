@@ -43,11 +43,25 @@ export default function TwoDMaterials() {
                             Go to search
                         </button>
                     </Link>
+                    <Fragment>
+                        {
+                            loggedIn ?
+                                <button
+                                    onClick={() => setIsOpen(true)}
+                                    className="w-full theme bg-gray-300 theme-text rounded-md text-lg px-4 py-3 hover:translate-y-1 outline-none"
+                                >
+                                    <span><i className="fa fa-database mr-2"></i></span>
+                                    Download full database
+                                </button>
+                                : <p className='text-gray-300'>(Login to download the entire database)</p>
+                        }
+                    </Fragment>
                 </div>
             </div>
             <Modal
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                dbType={"2d"}
             />
         </div>
     )

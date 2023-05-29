@@ -45,20 +45,14 @@ export default function Mxene() {
                     <Fragment>
                         {
                             loggedIn ?
-                                <a 
-                                    className="" 
-                                    href="https://drive.google.com/file/d/1_oq6_eObSqUVOon_a-QFYhLeVUIk6qbh/view?usp=sharing" 
-                                    target="_blank" 
-                                    rel="noreferrer"
+                                <button
+                                    onClick={() => setIsOpen(true)}
+                                    className="w-full theme bg-gray-300 theme-text rounded-md text-lg px-4 py-3 hover:translate-y-1 outline-none"
                                 >
-                                    <button
-                                        // onClick={() => setIsOpen(true)}
-                                        className="w-full theme bg-gray-300 theme-text rounded-md text-lg px-4 py-3 hover:translate-y-1 outline-none"
-                                    >
-                                        <span><i className="fa fa-database mr-2"></i></span>
-                                        Download full database
-                                    </button>
-                                </a> : <p className='text-gray-300'>(Login to download the entire database)</p>
+                                    <span><i className="fa fa-database mr-2"></i></span>
+                                    Download full database
+                                </button>
+                                : <p className='text-gray-300'>(Login to download the entire database)</p>
                         }
                     </Fragment>
                 </div>
@@ -66,6 +60,7 @@ export default function Mxene() {
             <Modal
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                dbType={"mxene"}
             />
         </div>
     )
