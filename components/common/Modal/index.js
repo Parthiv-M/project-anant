@@ -81,8 +81,12 @@ export default function Modal({ isOpen, setIsOpen, dbType }) {
       try {
         const apiResult = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/dbdownload/${dbType}`, downloadInfo);
         if (apiResult.status === 200) {
-          const blob = b64ToBlob(apiResult.data, "application/zip");
-          saveAs(blob, 'database.zip');
+          if (dbType === "mxene") {
+            saveAs(apiResult.data, 'database.zip');
+          } else {
+            const blob = b64ToBlob(apiResult.data, "application/zip");
+            saveAs(blob, 'database.zip');
+          }
           setDownloadSuccessful(true);
           setLoading(false);
         }
@@ -94,7 +98,7 @@ export default function Modal({ isOpen, setIsOpen, dbType }) {
           setTimeout(() => {
             resetState();
             setIsOpen(false);
-          }, 5000);
+          }, 3000);
         }
       }
     }
