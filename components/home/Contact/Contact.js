@@ -13,7 +13,7 @@ const Contact = (props) => {
         formData.append('template_id', process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID);
         formData.append('user_id', process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
         formData.append('from_name', document.getElementById("contact-form").elements["first_name"].value + " " + document.getElementById("contact-form").elements["last_name"].value);
-        formData.append('reply_to', document.getElementById("contact-form").elements["from_email"]);
+        formData.append('reply_to', document.getElementById("contact-form").elements["from_email"]).value;
 
         let res = await axios.post("https://api.emailjs.com/api/v1.0/email/send-form", formData)
         if (res.status === 200) {
