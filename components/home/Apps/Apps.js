@@ -6,7 +6,7 @@ const AppData = [
   {
     name: "MXene Database",
     description: "Contains details of over 23,000 MXenes, with downloadable POSCARs",
-    image: "https://ik.imagekit.io/iiscvsmanipal/mxene_NMetdDe-U0?updatedAt=1639042149885",
+    image: "/images/MxeneDatabaseCard.png",
     link: "/apps/mxene"
   },
   {
@@ -29,9 +29,9 @@ const AppData = [
   },
   {
     name: "Post Processing Utilities",
-    description: "Upcoming...",
-    image: "https://ik.imagekit.io/iiscvsmanipal/post_processing_yiBmqAE3L?updatedAt=1639042149826",
-    link: null
+    description: "ML models and training data to help learn about material properties",
+    image: "/images/PostProcessingCard.png",
+    link: "/postprocess"
   }
 ]
 
