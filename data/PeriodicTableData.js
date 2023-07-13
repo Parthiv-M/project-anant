@@ -17,4 +17,6 @@ const T_Values = ["H", "O", "F", "Cl", "Br", "OH", "NP", "CN", "RO", "OBr", "OCl
 const FunctionalGroups = ['NCS', 'SH', 'NO', 'OH', 'PH', 'NCO', 'Cl', 'OCN', 'Se', 'F', 'SCN', 'S', 'O', 'I', 'Te', 'NC', 'Br', 'CN', 'NH'];
 const Metals = ['Bi', 'Cr', 'La', 'W', 'Zn', 'Ga', 'Pt', 'Cu', 'Y', 'Rh', 'Ru', 'Hf', 'Sn', 'Mo', 'Al', 'Tc', 'Os', 'Fe', 'Zr', 'Sm', 'Lu', 'Ce', 'Be', 'Ba', 'Sc', 'Re', 'Ge', 'Ti', 'Cd', 'Pb', 'Ni', 'Sr', 'Ca', 'Nd', 'Ir', 'Te', 'In', 'Pd', 'Mn', 'Gd', 'Mg', 'Co'];
 
-export { TableLayout, M_Values, X_Values, T_Values, FunctionalGroups, Metals }
+const E_values = ['Cd', 'Co', 'Zn', 'O'];
+
+export { TableLayout, M_Values, X_Values, T_Values, FunctionalGroups, Metals, E_values }
