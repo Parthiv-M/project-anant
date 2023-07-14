@@ -67,7 +67,7 @@ export default function MxeneResult({ thermoData, slug }) {
                 <p className="md:text-4xl text-3xl font-bold text-white" dangerouslySetInnerHTML={{ __html: molecularNameResolver({ fullMaterial: thermoData.material }) }}></p>
                 <div className="w-56 mx-auto my-2 h-1 bg-gray-100"></div>
             </div>
-            <div className="lg:p-8 p-4 grid lg:grid-cols-2 grid-cols-1 gap-2">
+            <div className="w-full lg:p-24 p-4 grid lg:grid-cols-2 grid-cols-1 gap-2">
                 <div className="min-h-[40vh] h-full w-full flex justify-center items-center result-card rounded-lg" id="apphere">
                     {Model3D}
                 </div>
