@@ -15,6 +15,7 @@ import { Tooltip } from "react-tooltip";
 import 'react-tooltip/dist/react-tooltip.css';
 import Image from 'next/image';
 import molecularNameResolver from '../../../functions/moleculeNameResolver';
+import { ElectronicBandStructure, FigureOfMerit, GroupVelocity, GrunesianParam, ELF, PhononDispersionCurve, RelaxationTime } from '../../../data/ToolTipData';
 
 export default function MxeneResult({ thermoData, slug }) {
     const router = useRouter();
@@ -114,7 +115,7 @@ export default function MxeneResult({ thermoData, slug }) {
                             <div
                                 className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
                                 data-tooltip-id="tooltip"
-                                data-tooltip-content={""}
+                                data-tooltip-content={ElectronicBandStructure}
                                 data-tooltip-place="top"
                             >?</div>
                         </div>
@@ -155,7 +156,7 @@ export default function MxeneResult({ thermoData, slug }) {
                             <div
                                 className="absolute bg-white bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
                                 data-tooltip-id="tooltip"
-                                data-tooltip-content={""}
+                                data-tooltip-content={PhononDispersionCurve}
                                 data-tooltip-place="top"
                             >?</div>
                         </div>
@@ -179,7 +180,7 @@ export default function MxeneResult({ thermoData, slug }) {
                             <div
                                 className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
                                 data-tooltip-id="tooltip"
-                                data-tooltip-content={""}
+                                data-tooltip-content={RelaxationTime}
                                 data-tooltip-place="top"
                             >?</div>
                         </div>
@@ -203,7 +204,7 @@ export default function MxeneResult({ thermoData, slug }) {
                             <div
                                 className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
                                 data-tooltip-id="tooltip"
-                                data-tooltip-content={""}
+                                data-tooltip-content={ELF}
                                 data-tooltip-place="top"
                             >?</div>
                         </div>
@@ -227,7 +228,7 @@ export default function MxeneResult({ thermoData, slug }) {
                             <div
                                 className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
                                 data-tooltip-id="tooltip"
-                                data-tooltip-content={""}
+                                data-tooltip-content={GroupVelocity}
                                 data-tooltip-place="top"
                             >?</div>
                         </div>
@@ -251,7 +252,7 @@ export default function MxeneResult({ thermoData, slug }) {
                             <div
                                 className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
                                 data-tooltip-id="tooltip"
-                                data-tooltip-content={""}
+                                data-tooltip-content={GrunesianParam}
                                 data-tooltip-place="top"
                             >?</div>
                         </div>
@@ -299,7 +300,7 @@ export default function MxeneResult({ thermoData, slug }) {
                             <div
                                 className="absolute bottom-0 right-0 mr-4 border border-2 border-black px-2 rounded-full font-bold"
                                 data-tooltip-id="tooltip"
-                                data-tooltip-content={""}
+                                data-tooltip-content={FigureOfMerit}
                                 data-tooltip-place="top"
                             >?</div>
                         </div>

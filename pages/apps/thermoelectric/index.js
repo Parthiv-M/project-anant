@@ -27,11 +27,18 @@ export default function Thermoelectric() {
             </div>
             <div className="container flex lg:flex-row flex-col items-center justify-center mb-12">
                 <div className="lg:w-1/2 w-full px-8 md:px-8">
-                    <Image src="https://ik.imagekit.io/iiscvsmanipal/mxene_NMetdDe-U0?updatedAt=1639042149885" height="100" width="200" layout="responsive" />
+                    <Image src="/images/ThermoDatabaseCard.png" height="100" width="200" layout="responsive" />
                 </div>
                 <div className="lg:w-1/2 w-full px-8 pt-5 md:pt-0  text-center flex flex-col-reverse lg:flex-col">
                     <p className="md:text-xl text-lg text-white lg:text-justify">
-                        To be updated...
+                        The escalating energy crisis, resulting from the substantial amount of energy
+                        wasted in the form of heat by sources such as combustion fuels, chemical
+                        reactions, and nuclear decays, demands alternative resources for efficient
+                        energy management. This has accelerated the search for clean and renewable
+                        sources and newer approaches toward efficient energy management. One of the most
+                        promising approaches is converting waste heat into electrical energy using
+                        thermoelectric materials. Such conversion approaches utilize and harvest the
+                        waste heat, thereby mitigating environmental concerns.
                     </p>
                     <Link href="/apps/thermoelectric/search">
                         <button

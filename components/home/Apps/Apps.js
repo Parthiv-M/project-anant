@@ -23,9 +23,9 @@ const AppData = [
   },
   {
     name: "Thermoelectric Material Database",
-    description: "Upcoming...",
-    image: "https://ik.imagekit.io/iiscvsmanipal/thermoelectric_dUZbOhz9u?updatedAt=1639042149795",
-    link: null
+    description: "Contains details about thermoelectric materials with a host of other calculated properties",
+    image: "/images/ThermoDatabaseCard.png",
+    link: "/apps/thermoelectric"
   },
   {
     name: "Post Processing Utilities",
